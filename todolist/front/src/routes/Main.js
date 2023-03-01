@@ -7,15 +7,16 @@ import { FcTodoList } from "react-icons/fc";
 function Main() {
   return (
     <div className="Main">
-      <header className="Header">
+      <header className="Header_main">
         <h2 style={{ color: "blue" }}>
           <FcTodoList size="180" /> <br />
           To - Do - List
         </h2>
-        <Link to="/Login">
-          <button className="">로그인</button>
-        </Link>
       </header>
+
+      <Link to="/login">
+        <button className="">로그인</button>
+      </Link>
     </div>
   );
 }

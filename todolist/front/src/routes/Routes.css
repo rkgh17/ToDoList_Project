@@ -2,6 +2,16 @@
   text-align: center;
 }
 
+.Header_main {
+  min-height: 75vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  line-height: 500%; /*줄간격*/
+}
+
 .Header {
   min-height: 100vh;
   display: flex;
@@ -9,5 +19,5 @@
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
-  line-height: 500%; /*줄간격*/
+  line-height: 300%;
 }
