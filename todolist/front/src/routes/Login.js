@@ -93,7 +93,9 @@ function Login() {
         </div>
 
         <div>
-          <button className="">회원가입</button>
+          <Link to="/signup">
+            <button className="">회원가입</button>
+          </Link>
         </div>
       </header>
     </div>
