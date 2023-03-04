@@ -1,5 +1,6 @@
 import { useState } from "react";
 import "./Routes.css";
+import axios from "axios";
 
 function SignUp() {
   // 이름, 아이디, 비밀번호
@@ -36,7 +37,24 @@ function SignUp() {
     }
   };
 
-  const onClickSignUp = () => {};
+  // 회원가입 수행 -> 백으로 전송
+  const onClickSignUp = () => {
+    console.log("회원가입 수행");
+    console.log("이름 : ", inputUserName);
+    console.log("아이디 : ", inputUserId);
+    console.log("비밀번호 : ", inputUserPw);
+
+    axios
+      .post("/api/signup", {
+        name: inputUserName,
+        id: inputUserId,
+        passwd: inputUserPw,
+      })
+      .then((res) => {
+        alert("회원가입 완료");
+      })
+      .catch();
+  };
 
   return (
     <div className="Main">
@@ -85,6 +103,7 @@ function SignUp() {
             </span>
           </div>
         </div>
+
         <div>
           <button className="" onClick={onClickSignUp}>
             회원가입

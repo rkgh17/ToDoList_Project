@@ -22,7 +22,7 @@ function Login() {
     console.log("비밀번호 : ", inputPw);
 
     axios
-      .post("http://localhost:8080/api/login", {
+      .post("/api/login", {
         id: inputId,
         passwd: inputPw,
       })
