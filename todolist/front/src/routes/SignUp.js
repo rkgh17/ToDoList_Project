@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./Routes.css";
 import axios from "axios";
 
@@ -15,17 +16,18 @@ function SignUp() {
   // 유효성 검사 (일단 비밀번호만)
   const [isPasswordConfirm, setIsPasswordConfirm] = useState(false);
 
+  // 값 추적
   const handleInputUserId = (e) => {
     setUserId(e.target.value);
   };
   const handleInputUserName = (e) => {
     setUserName(e.target.value);
   };
-
   const handleInputUserPw = (e) => {
     setUserPw(e.target.value);
   };
 
+  // 비밀번호 검사
   const handleInputUserPwCheck = (e) => {
     setUserPwCheck(e.target.value);
     if (inputUserPw === e.target.value) {
@@ -52,63 +54,76 @@ function SignUp() {
       })
       .then((res) => {
         alert("회원가입 완료");
+        goToLogin();
       })
       .catch();
+  };
+
+  const navigate = useNavigate();
+  const goToLogin = () => {
+    navigate("/login");
   };
 
   return (
     <div className="Main">
       <header className="Header">
-        <div style={{ display: "flex", flexDirection: "column" }}>
-          <div>회원가입</div>
+        <form>
+          <div style={{ display: "flex", flexDirection: "column" }}>
+            <div>회원가입</div>
 
-          <div className="formbox">
-            <label>Name </label>
-            <input
-              type="name"
-              value={inputUserName}
-              onChange={handleInputUserName}
-            ></input>
+            <div className="formbox">
+              <label>Name </label>
+              <input
+                type="name"
+                value={inputUserName}
+                onChange={handleInputUserName}
+              ></input>
+            </div>
+
+            <div className="formbox">
+              <label>Email (ID) </label>
+              <input
+                type="email"
+                value={inputUserId}
+                onChange={handleInputUserId}
+              ></input>
+            </div>
+            <div className="formbox">
+              <label>비밀번호 </label>
+              <input
+                type="password"
+                value={inputUserPw}
+                onChange={handleInputUserPw}
+                title="비밀번호"
+              ></input>
+            </div>
+
+            <div className="formbox">
+              <label>비밀번호 확인 </label>
+              <input
+                type="password"
+                value={inputUserPwCheck}
+                onChange={handleInputUserPwCheck}
+              ></input>
+              <span
+                className={`message ${isPasswordConfirm ? "success" : "error"}`}
+              >
+                {passwordConfirmMessage}
+              </span>
+            </div>
           </div>
 
-          <div className="formbox">
-            <label>Email (ID) </label>
-            <input
-              type="email"
-              value={inputUserId}
-              onChange={handleInputUserId}
-            ></input>
-          </div>
-          <div className="formbox">
-            <label>비밀번호 </label>
-            <input
-              type="password"
-              value={inputUserPw}
-              onChange={handleInputUserPw}
-              title="비밀번호"
-            ></input>
-          </div>
-
-          <div className="formbox">
-            <label>비밀번호 확인 </label>
-            <input
-              type="password"
-              value={inputUserPwCheck}
-              onChange={handleInputUserPwCheck}
-            ></input>
-            <span
-              className={`message ${isPasswordConfirm ? "success" : "error"}`}
+          <div>
+            <button
+              type="submit"
+              className=""
+              onClick={onClickSignUp}
+              disabled={!isPasswordConfirm}
             >
-              {passwordConfirmMessage}
-            </span>
+              회원가입
+            </button>
           </div>
-        </div>
-
-        <div>
-          <button className="" onClick={onClickSignUp}>
-            회원가입
-          </button>
-        </div>
+        </form>
       </header>
     </div>
   );

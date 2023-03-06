@@ -13,7 +13,7 @@ public class UserController {
 	
 	@Autowired private MemberRepository memberRepository;
 	
-	@ResponseBody
+	
 	@PostMapping("/api/signup")
 	public void signupForm(@RequestBody Map<String, Object> map) {
 		
