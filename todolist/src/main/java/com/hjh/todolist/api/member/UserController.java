@@ -15,15 +15,23 @@ public class UserController {
 	
 	
 	@PostMapping("/api/signup")
-	public void signupForm(@RequestBody Map<String, Object> map) {
+	public String signupForm(@RequestBody Map<String, Object> map) {
 		
 		// 폼 전송값 확인
-		System.out.println(map);
+//		System.out.println(map);
 		
 		// map 자료찾기
-		System.out.println(map.get("username"));
+//		System.out.println(map.get("username"));
 		
-		memberRepository.insertXml(map);
+		
+		// 아이디를 db에 넣기 전에, 중복검사를 한다.
+		if(memberRepository.selectXml(map) == null) {
+			memberRepository.insertXml(map);
+			return null;
+		}
+		else {// id 중복
+			return "id중복";
+		}
 		
 	}
 

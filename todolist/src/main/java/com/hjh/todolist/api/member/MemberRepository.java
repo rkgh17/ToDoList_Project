@@ -11,5 +11,7 @@ public interface MemberRepository {
 	
 	//mapper를 사용하는 방식
 	void insertXml(Map<String, Object> map);
+
+	Map selectXml(Map<String, Object> map);
 	
 }

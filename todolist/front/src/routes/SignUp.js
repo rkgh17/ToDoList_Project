@@ -53,8 +53,13 @@ function SignUp() {
         passwd: inputUserPw,
       })
       .then((res) => {
-        alert("회원가입 완료");
-        goToLogin();
+        // console.log(res.data);
+        if (res.data == "id중복") {
+          alert("id가 중복입니다.");
+        } else {
+          alert("회원가입 완료");
+          goToLogin();
+        }
       })
       .catch();
   };

@@ -60,38 +60,39 @@ function Login() {
     <div className="Main">
       <header className="Header">
         <div>로그인</div>
-        <div>
+        <form>
           <div>
-            <AiOutlineMail />
-            <input
-              type="id"
-              className="form-control"
-              placeholder="Enter ID"
-              name="input_id"
-              value={inputId}
-              onChange={handleInputId}
-            />
+            <div>
+              <AiOutlineMail />
+              <input
+                type="id"
+                className="form-control"
+                placeholder="Enter ID"
+                name="input_id"
+                value={inputId}
+                onChange={handleInputId}
+              />
+            </div>
+
+            <div>
+              <RiLockPasswordLine />
+              <input
+                type="password"
+                className="form-control"
+                placeholder="Enter password"
+                name="input_pw"
+                value={inputPw}
+                onChange={handleInputPw}
+              />
+            </div>
           </div>
 
           <div>
-            <RiLockPasswordLine />
-            <input
-              type="password"
-              className="form-control"
-              placeholder="Enter password"
-              name="input_pw"
-              value={inputPw}
-              onChange={handleInputPw}
-            />
+            <button type="submit" onClick={onClickLogin} className="">
+              로그인
+            </button>
           </div>
-        </div>
-
-        <div>
-          <button type="button" onClick={onClickLogin} className="">
-            로그인
-          </button>
-        </div>
-
+        </form>
         <div>
           <Link to="/signup">
             <button className="">회원가입</button>
