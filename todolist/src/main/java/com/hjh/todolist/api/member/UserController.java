@@ -13,7 +13,7 @@ public class UserController {
 	
 	@Autowired private MemberRepository memberRepository;
 	
-	
+	// 회원가입 api
 	@PostMapping("/api/signup")
 	public String signupForm(@RequestBody Map<String, Object> map) {
 		
@@ -33,6 +33,12 @@ public class UserController {
 			return "id중복";
 		}
 		
+	}
+	
+	// 로그인 api
+	@PostMapping("/api/login")
+	public void loginForm(@RequestBody Map<String, Object> map) {
+		System.out.println(map);
 	}
 
 }
