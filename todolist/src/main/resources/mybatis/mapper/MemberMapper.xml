@@ -4,11 +4,15 @@
 	
 	<!-- auto incre -->
     <insert id="insertXml" useGeneratedKeys="true" keyProperty="id">
-        insert into member(username, id, passwd) values(#{username}, #{id}, #{passwd})
+        insert into member(username, id, passwd, role) values(#{username}, #{id}, #{passwd}, "ROLE_MEMBER")
     </insert>
     
     <select id="selectXml" resultType="Map" parameterType="Map">
 		select id from member where id = #{id}
+	</select>
+	
+	<select id="findbyEmail" resultType="Map">
+		select * from member where id = #{username}
 	</select>
 
 </mapper>

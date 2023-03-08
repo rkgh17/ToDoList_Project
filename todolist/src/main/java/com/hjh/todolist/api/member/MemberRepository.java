@@ -1,6 +1,7 @@
 package com.hjh.todolist.api.member;
 
 import java.util.Map;
+import java.util.Optional;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
@@ -13,5 +14,7 @@ public interface MemberRepository {
 	void insertXml(Map<String, Object> map);
 
 	Map selectXml(Map<String, Object> map);
+	
+	Map findbyEmail(String username);
 	
 }
