@@ -16,6 +16,6 @@ public class Member {
 	private String passwd;
 	
 //	@Enumerated(EnumType.STRING)
-	private String role = "ROLE_MEMBER";
+	private String role;
 
 }

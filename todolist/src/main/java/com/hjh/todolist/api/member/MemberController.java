@@ -3,35 +3,26 @@ package com.hjh.todolist.api.member;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
 @RestController
-public class UserController {
-	
-	@Autowired private MemberRepository memberRepository;
+public class MemberController {
+
+	private final MemberService memberService;
 	
 	// 회원가입 api
 	@PostMapping("/api/signup")
-	public String signupForm(@RequestBody Map<String, Object> map) {
+	public void signupForm(@RequestBody Map<String, Object> map) {
+
+		memberService.SignUp(map);
 		
-		// 폼 전송값 확인
-//		System.out.println(map);
-		
-		// map 자료찾기
-//		System.out.println(map.get("username"));
-		
-		
-		// 아이디를 db에 넣기 전에, 중복검사를 한다.
-		if(memberRepository.selectXml(map) == null) {
-			memberRepository.insertXml(map);
-			return null;
-		}
-		else {// id 중복
-			return "id중복";
-		}
 		
 	}
 	
