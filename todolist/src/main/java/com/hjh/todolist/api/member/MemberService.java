@@ -25,8 +25,8 @@
 ////		System.out.println(map.get("username"));
 //		
 //		// 비밀번호 암호화
-//		String encodePW = passwordEncoder.encode((CharSequence) map.get("passwd"));
-//		map.put("passwd", encodePW);
+//		String encodePW = passwordEncoder.encode((CharSequence) map.get("password"));
+//		map.put("password", encodePW);
 ////		System.out.println(map.get("passwd"));
 //		
 //		// 아이디를 db에 넣기 전에, 중복검사를 한다.

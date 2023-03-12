@@ -49,8 +49,8 @@ function SignUp() {
     axios
       .post("/api/signup", {
         username: inputUserName,
-        id: inputUserId,
-        passwd: inputUserPw,
+        nickname: inputUserId,
+        password: inputUserPw,
       })
       .then((res) => {
         // console.log(res.data);
