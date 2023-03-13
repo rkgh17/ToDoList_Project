@@ -48,20 +48,27 @@ function SignUp() {
 
     axios
       .post("/api/signup", {
-        username: inputUserName,
-        nickname: inputUserId,
+        nickname: inputUserName,
+        email: inputUserId,
         password: inputUserPw,
       })
       .then((res) => {
-        // console.log(res.data);
-        if (res.data == "id중복") {
-          alert("id가 중복입니다.");
-        } else {
-          alert("회원가입 완료");
-          goToLogin();
-        }
+        console.log(res.data);
+        alert("회원가입이 완료되었습니다.");
+        goToLogin();
+        // if (res.data.success) {
+        //   alert("회원가입이 완료되었습니다.");
+        //   goToLogin();
+        // }
       })
-      .catch();
+      .catch((err) => {
+        // console.log(err.response.data);
+        if (err.response.status === 409) {
+          alert("중복된 Email입니다.");
+        } else {
+          alert("회원가입 중 오류가 발생하였습니다.");
+        }
+      });
   };
 
   const navigate = useNavigate();
