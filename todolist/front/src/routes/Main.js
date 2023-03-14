@@ -4,7 +4,9 @@ import { Link } from "react-router-dom";
 import "./Routes.css";
 import { FcTodoList } from "react-icons/fc";
 
-function Main() {
+function Main(props) {
+  const { isLoggedin } = props;
+
   return (
     <div className="Main">
       <header className="Header_main">
@@ -14,9 +16,13 @@ function Main() {
         </h2>
       </header>
 
-      <Link to="/login">
-        <button className="">로그인</button>
-      </Link>
+      {isLoggedin ? (
+        <button>로그아웃</button>
+      ) : (
+        <Link to="/login">
+          <button className="">로그인</button>
+        </Link>
+      )}
     </div>
   );
 }
