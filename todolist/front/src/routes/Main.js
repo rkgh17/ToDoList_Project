@@ -1,11 +1,13 @@
 import React from "react";
-import { useEffect, useState } from "react";
+// import { useEffect, useState } from "react";
+import { useContext } from "react";
+import { AuthContext } from "../context/AuthContext";
 import { Link } from "react-router-dom";
 import "./Routes.css";
 import { FcTodoList } from "react-icons/fc";
 
-function Main(props) {
-  const { isLoggedin } = props;
+function Main() {
+  const { isLoggedIn } = useContext(AuthContext);
 
   return (
     <div className="Main">
@@ -16,7 +18,7 @@ function Main(props) {
         </h2>
       </header>
 
-      {isLoggedin ? (
+      {isLoggedIn ? (
         <button>로그아웃</button>
       ) : (
         <Link to="/login">

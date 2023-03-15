@@ -14,6 +14,7 @@ import com.hjh.todolist.member.Member;
 import com.hjh.todolist.member.MemberRepository;
 import com.hjh.todolist.member.dto.MemberRequestDto;
 import com.hjh.todolist.member.dto.MemberResponseDto;
+import com.hjh.todolist.refreshtoken.RefreshTokenRepository;
 
 @Service
 @RequiredArgsConstructor

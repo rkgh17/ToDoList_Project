@@ -1,10 +1,15 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AiOutlineMail } from "react-icons/ai";
 import { RiLockPasswordLine } from "react-icons/ri";
+import { AuthContext } from "../context/AuthContext";
 import axios from "axios";
 
 function Login() {
+  // 로그인 상태관리
+  const { setIsLoggedIn } = useContext(AuthContext);
+
+  // id, pw 입력 관리
   const [inputId, setInputId] = useState("");
   const [inputPw, setInputPw] = useState("");
 
@@ -35,13 +40,21 @@ function Login() {
         console.log(res);
         // console.log("res.data.userId :: ", res.data.userId);
         // console.log("res.data.msg :: ", res.data.msg);
-        console.log(res.data.accessToken);
-        localStorage.setItem("accessToken", res.data.accessToken);
-        // localStorage.setItem('refreshToken', res.data.refreshToken);
-        // setIsLoggedIn(true);
+        // console.log(res.data.accessToken);
 
-        // 작업 완료 되면 페이지 이동(메인화면으로)
-        goToMain();
+        // 로그인 성공
+        if (res.status === 200) {
+          // 토큰 저장
+          localStorage.setItem("accessToken", res.data.accessToken);
+          localStorage.setItem("refreshToken", res.data.refreshToken);
+
+          // 로그인 상태 저장 - useContext
+          setIsLoggedIn(true);
+
+          alert("로그인 완료");
+
+          goToMain();
+        }
       })
       .catch((err) => {
         console.log(err);
