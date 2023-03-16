@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 // import { useEffect, useState } from "react";
 import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
@@ -7,7 +7,12 @@ import "./Routes.css";
 import { FcTodoList } from "react-icons/fc";
 
 function Main() {
-  const { isLoggedIn } = useContext(AuthContext);
+  const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
+
+  useEffect(() => {
+    // 페이지 로드 시 localStorage에서 isLoggedIn 값을 가져와 설정
+    setIsLoggedIn(JSON.parse(localStorage.getItem("isLoggedIn")) || false);
+  }, [setIsLoggedIn]);
 
   return (
     <div className="Main">

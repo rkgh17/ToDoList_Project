@@ -9,6 +9,12 @@ function Login() {
   // 로그인 상태관리
   const { setIsLoggedIn } = useContext(AuthContext);
 
+  // 토큰관리
+  const saveAccessToken = (accessToken, refreshToken) => {
+    localStorage.setItem("accessToken", accessToken);
+    localStorage.setItem("refreshToken", refreshToken);
+  };
+
   // id, pw 입력 관리
   const [inputId, setInputId] = useState("");
   const [inputPw, setInputPw] = useState("");
@@ -45,11 +51,12 @@ function Login() {
         // 로그인 성공
         if (res.status === 200) {
           // 토큰 저장
-          localStorage.setItem("accessToken", res.data.accessToken);
-          localStorage.setItem("refreshToken", res.data.refreshToken);
+          saveAccessToken(res.data.accessToken, res.data.refreshToken);
 
           // 로그인 상태 저장 - useContext
           setIsLoggedIn(true);
+
+          localStorage.setItem("isLoggedIn", true);
 
           alert("로그인 완료");
 
