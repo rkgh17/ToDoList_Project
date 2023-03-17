@@ -44,6 +44,7 @@ public class TokenProvider {
 		this.customUserDetailsService = customUserDetailsService;
 	}
 	
+	// 토큰 생성
 	public TokenDto generateTokenDto(Authentication authentication) {
 		String authorities = authentication.getAuthorities().stream()
 				.map(GrantedAuthority::getAuthority)

@@ -1,6 +1,9 @@
 package com.hjh.todolist.service;
 
 import lombok.RequiredArgsConstructor;
+
+import java.util.Optional;
+
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
@@ -14,7 +17,9 @@ import com.hjh.todolist.member.Member;
 import com.hjh.todolist.member.MemberRepository;
 import com.hjh.todolist.member.dto.MemberRequestDto;
 import com.hjh.todolist.member.dto.MemberResponseDto;
+import com.hjh.todolist.refreshtoken.RefreshToken;
 import com.hjh.todolist.refreshtoken.RefreshTokenRepository;
+import com.hjh.todolist.refreshtoken.RefreshTokenService;
 
 @Service
 @RequiredArgsConstructor
@@ -24,6 +29,7 @@ public class AuthService {
 	private final MemberRepository memberRepository;
 	private final PasswordEncoder passwordEncoder;
 	private final TokenProvider tokenProvider;
+	private final RefreshTokenService refreshTokenService;
 	
 	public MemberResponseDto signup(MemberRequestDto requestDto) {
 		if(memberRepository.existsByEmail(requestDto.getEmail())) {
@@ -39,6 +45,13 @@ public class AuthService {
 		
 		Authentication authentication = managerBuilder.getObject().authenticate(authenticationToken);
 		
-		return tokenProvider.generateTokenDto(authentication); 
+		// 반환할 토큰
+		TokenDto tokens = tokenProvider.generateTokenDto(authentication);
+		
+		// 리프레시토큰 db에 저장
+		refreshTokenService.saveToken(tokens.getRefreshToken(), memberRepository.findyByNativeQuery(requestDto.getEmail()));
+		
+		
+		return tokens; 
 	}
 }
