@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./Routes.css";
 import { FcTodoList } from "react-icons/fc";
 
 function Main() {
-  // 로그인 상태값
-  const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
+  // useContext을 사용하여 로그인 상태값관리
+  const { isLoggedIn, setIsLoggedIn, logout } = useContext(AuthContext);
 
   const [accessToken, setAccessToken] = useState(
     localStorage.getItem("accessToken") || null
@@ -28,15 +28,17 @@ function Main() {
     setRefreshToken(null);
 
     // 로그인 상태 변경
-    setIsLoggedIn(false);
+    localStorage.removeItem("isLoggedIn");
+    // logout();
     localStorage.removeItem("accessToken");
     localStorage.removeItem("refreshToken");
+    window.location.reload();
   };
 
   // 토큰 정보
   const tokeninfo = () => {
-    console.log("엑세스 토큰 : ", localStorage.getItem("accessToken"));
-    console.log("리프레쉬 토큰 : ", localStorage.getItem("refreshToken"));
+    console.log("엑세스 토큰 : ", accessToken);
+    console.log("리프레쉬 토큰 : ", refreshToken);
   };
 
   return (

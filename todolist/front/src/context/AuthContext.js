@@ -3,6 +3,7 @@
  */
 
 import { createContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
 export const AuthContext = createContext();
 
 const AuthContextProvider = ({ children }) => {
@@ -10,16 +11,19 @@ const AuthContextProvider = ({ children }) => {
     JSON.parse(localStorage.getItem("isLoggedIn")) || false
   );
 
+  const navigate = useNavigate();
+
   const login = () => {
     setIsLoggedIn(true);
   };
 
   const logout = () => {
     setIsLoggedIn(false);
+    navigate("/");
   };
 
   return (
-    <AuthContext.Provider value={{ isLoggedIn, login, logout }}>
+    <AuthContext.Provider value={{ isLoggedIn, setIsLoggedIn, login, logout }}>
       {children}
     </AuthContext.Provider>
   );
