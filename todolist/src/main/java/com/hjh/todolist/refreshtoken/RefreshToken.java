@@ -6,6 +6,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import com.hjh.todolist.exception.InvalidRefreshTokenException;
+
 import lombok.Getter;
 
 @Entity
@@ -31,9 +33,9 @@ public class RefreshToken {
         this.token = token;
     }
 
-//    public void validateSameToken(String token) {
-//        if (!this.token.equals(token)) {
-//            throw new InvalidRefreshTokenException();
-//        }
-//    }
+    public void validateSameToken(String token) {
+        if (!this.token.equals(token)) {
+            throw new InvalidRefreshTokenException();
+        }
+    }
 }

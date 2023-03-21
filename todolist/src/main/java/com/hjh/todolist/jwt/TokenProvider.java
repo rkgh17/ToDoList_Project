@@ -15,11 +15,14 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
+import com.hjh.todolist.auth.AuthInfo;
 import com.hjh.todolist.jwt.dto.TokenDto;
 import com.hjh.todolist.service.CustomUserDetailsService;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.Jws;
+import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -30,7 +33,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Component
 @Slf4j
-public class TokenProvider {
+public class TokenProvider implements TokenManager{
 	private static final String AUTHORITIES_KEY = "auth";
 	private static final String BEARER_TYPE = "bearer";
 	private static final long ACCESS_TOKEN_EXPIRE_TIME = 1000 * 60 * 30; // 만료시간 30분
@@ -157,5 +160,35 @@ public class TokenProvider {
 		UserDetails userDetails = customUserDetailsService.loadUserByUsername(userid);
 		return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
 	}
+	
+	@Override
+	public String createAccessToken(AuthInfo authInfo) {
+		Date now = new Date();
+		Date validity = new Date(now.getTime() + ACCESS_TOKEN_EXPIRE_TIME);
+		
+		return Jwts.builder()
+				.claim("id", authInfo.getId())
+				.claim("role", authInfo.getRole_type())
+				.claim("nickname", authInfo.getNickname())
+				.setIssuedAt(now)
+				.setExpiration(validity)
+				.signWith(key)
+				.compact();
+	}
+	
+	// JWT 토큰의 유효성을 검증하는 메소드
+	@Override
+    public boolean isValid(String token) {
+        try {
+            Jws<Claims> claims = Jwts.parserBuilder()
+                    .setSigningKey(key)
+                    .build()
+                    .parseClaimsJws(token);
 
+            return !claims.getBody().getExpiration().before(new Date());
+        } catch (JwtException | IllegalArgumentException e) {
+            return false;
+        }
+    }
+	
 }

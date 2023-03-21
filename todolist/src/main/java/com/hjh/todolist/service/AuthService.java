@@ -11,6 +11,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.hjh.todolist.auth.AuthInfo;
 import com.hjh.todolist.jwt.TokenProvider;
 import com.hjh.todolist.jwt.dto.TokenDto;
 import com.hjh.todolist.member.Member;
@@ -54,4 +55,13 @@ public class AuthService {
 		
 		return tokens; 
 	}
+	
+	// 로그인 로직 변경 - 중단
+//	public AuthInfo login(MemberRequestDto requestDto) {
+//		String username = requestDto.getNickname();
+//		String email = requestDto.getEmail();
+//		
+//		Optional<Member> member = memberRepository.findByEmail(email);
+//		return new AuthInfo(member.get)
+//	}
 }
