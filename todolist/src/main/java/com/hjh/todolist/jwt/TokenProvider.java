@@ -58,7 +58,7 @@ public class TokenProvider implements TokenManager{
 		Date tokenExpiresIn = new Date(now + ACCESS_TOKEN_EXPIRE_TIME);
 		Date refreshTokenExpiresIn = new Date(now + REFRESH_TOKEN_EXPIRE_TIME);
 		
-		System.out.println(tokenExpiresIn);
+		System.out.println("토큰 만료시간 :" + tokenExpiresIn);
 		
 		String accessToken = Jwts.builder()
 				.setSubject(authentication.getName())
