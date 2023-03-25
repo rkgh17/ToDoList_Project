@@ -9,20 +9,20 @@ function Main() {
   // useContext을 사용하여 로그인 상태값관리
   const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
 
-  const [accessToken, setAccessToken] = useState(
-    localStorage.getItem("accessToken") || null
-  );
-  const [refreshToken, setRefreshToken] = useState(
-    localStorage.getItem("refreshToken") || null
-  );
+  // const [accessToken, setAccessToken] = useState(
+  //   localStorage.getItem("accessToken") || null
+  // );
+  // const [refreshToken, setRefreshToken] = useState(
+  //   localStorage.getItem("refreshToken") || null
+  // );
 
-  const [tokenExpiresIn, setTokenExpiresIn] = useState(
-    localStorage.getItem("accessTokenExpiresIn") || null
-  );
+  // const [tokenExpiresIn, setTokenExpiresIn] = useState(
+  //   localStorage.getItem("accessTokenExpiresIn") || null
+  // );
 
-  const [refreshTokenExpiresIn, setRefreshTokenExpiresIn] = useState(
-    localStorage.getItem("refreshTokenExpiresIn") || null
-  );
+  // const [refreshTokenExpiresIn, setRefreshTokenExpiresIn] = useState(
+  //   localStorage.getItem("refreshTokenExpiresIn") || null
+  // );
 
   useEffect(() => {
     // 페이지 로드 시 localStorage에서 isLoggedIn 값을 가져와 설정
@@ -47,10 +47,16 @@ function Main() {
 
   // 토큰 정보
   const tokeninfo = () => {
-    console.log("엑세스 토큰 : ", accessToken);
-    console.log("엑세스 토큰 만료시간 : ", tokenExpiresIn);
-    console.log("리프레쉬 토큰 : ", refreshToken);
-    console.log("리프레쉬 토큰 만료시간 : ", refreshTokenExpiresIn);
+    console.log("엑세스 토큰 : ", localStorage.getItem("accessToken"));
+    console.log(
+      "엑세스 토큰 만료시간 : ",
+      localStorage.getItem("accessTokenExpiresIn")
+    );
+    console.log("리프레쉬 토큰 : ", localStorage.getItem("refreshToken"));
+    console.log(
+      "리프레쉬 토큰 만료시간 : ",
+      localStorage.getItem("refreshTokenExpiresIn")
+    );
   };
 
   return (
