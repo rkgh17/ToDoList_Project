@@ -10,9 +10,15 @@ function Login() {
   const { setIsLoggedIn } = useContext(AuthContext);
 
   // 토큰관리
-  const saveAccessToken = (accessToken, refreshToken) => {
+  const saveToken = (accessToken, refreshToken) => {
     localStorage.setItem("accessToken", accessToken);
     localStorage.setItem("refreshToken", refreshToken);
+  };
+
+  // 엑세스 타임 관리
+  const ExpiresIn = (accessTokenExpiresIn, refreshTokenExpiresIn) => {
+    localStorage.setItem("accessTokenExpiresIn", accessTokenExpiresIn);
+    localStorage.setItem("refreshTokenExpiresIn", refreshTokenExpiresIn);
   };
 
   // id, pw 입력 관리
@@ -51,7 +57,10 @@ function Login() {
         // 로그인 성공
         if (res.status === 200) {
           // 토큰 저장
-          saveAccessToken(res.data.accessToken, res.data.refreshToken);
+          saveToken(res.data.accessToken, res.data.refreshToken);
+
+          // 만료시간 저장
+          ExpiresIn(res.data.tokenExpiresIn, res.data.refreshTokenExpiresIn);
 
           // 로그인 상태 저장 - useContext
           setIsLoggedIn(true);
