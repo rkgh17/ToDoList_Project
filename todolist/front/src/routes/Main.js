@@ -59,6 +59,20 @@ function Main() {
     );
   };
 
+  // 숫자 테스트
+  const nowtime = () => {
+    const nowdate = new Date();
+    console.log("현재 시간 : ", nowdate);
+    console.log(
+      "토큰 만료 시간 : ",
+      new Date(localStorage.getItem("accessTokenExpiresIn") * 1) //자바스크립트 문자열-숫자
+    );
+    // console.log(
+    //   "토큰 데이터 타입 : ",
+    //   typeof (localStorage.getItem("accessTokenExpiresIn") * 1)
+    // );
+  };
+
   return (
     <div className="Main">
       <header className="Header_main">
@@ -72,6 +86,7 @@ function Main() {
         <div>
           <button onClick={handleLogout}>로그아웃</button>
           <button onClick={tokeninfo}>토큰정보 확인</button>
+          <button onClick={nowtime}>테스트-현재시간</button>
         </div>
       ) : (
         <Link to="/login">
