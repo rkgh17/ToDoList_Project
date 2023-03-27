@@ -67,10 +67,10 @@ function Main() {
       "토큰 만료 시간 : ",
       new Date(localStorage.getItem("accessTokenExpiresIn") * 1) //자바스크립트 문자열-숫자
     );
-    // console.log(
-    //   "토큰 데이터 타입 : ",
-    //   typeof (localStorage.getItem("accessTokenExpiresIn") * 1)
-    // );
+    console.log(
+      "토큰 데이터 타입 : ",
+      typeof (localStorage.getItem("accessTokenExpiresIn") * 1)
+    );
   };
 
   return (
