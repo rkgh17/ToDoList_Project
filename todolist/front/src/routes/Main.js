@@ -45,7 +45,7 @@ function Main() {
     window.location.reload();
   };
 
-  // 토큰 정보
+  // 토큰 정보 함수
   const tokeninfo = () => {
     console.log("엑세스 토큰 : ", localStorage.getItem("accessToken"));
     console.log(
@@ -59,7 +59,16 @@ function Main() {
     );
   };
 
-  // 숫자 테스트
+  // 토큰 페이로드 함수
+  const tokenPayload = () => {
+    console.log(
+      "토큰 페이로드",
+      // atob(localStorage.getItem("accessToken").split(".")[1])
+      atob(localStorage.getItem("accessToken").split(".")[1])
+    );
+  };
+
+  // 만료시간 테스트 함수
   const nowtime = () => {
     const nowdate = new Date();
     console.log("현재 시간 : ", nowdate);
@@ -85,7 +94,10 @@ function Main() {
       {isLoggedIn ? (
         <div>
           <button onClick={handleLogout}>로그아웃</button>
-          <button onClick={tokeninfo}>토큰정보 확인</button>
+          <div>
+            <button onClick={tokeninfo}>토큰정보 확인</button>
+            <button onClick={tokenPayload}>토큰 페이로드 확인</button>
+          </div>
           <button onClick={nowtime}>테스트-현재시간</button>
         </div>
       ) : (
