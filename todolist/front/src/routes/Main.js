@@ -4,6 +4,7 @@ import { AuthContext } from "../context/AuthContext";
 import { Link } from "react-router-dom";
 import "./Routes.css";
 import { FcTodoList } from "react-icons/fc";
+import axios from "axios";
 
 function Main() {
   // useContext을 사용하여 로그인 상태값관리
@@ -64,22 +65,45 @@ function Main() {
     console.log(
       "토큰 페이로드",
       // atob(localStorage.getItem("accessToken").split(".")[1])
-      atob(localStorage.getItem("accessToken").split(".")[1])
+      atob(localStorage.getItem("accessToken").split(".")[1]) // 타입은 String
     );
   };
 
   // 만료시간 테스트 함수
   const nowtime = () => {
-    const nowdate = new Date();
-    console.log("현재 시간 : ", nowdate);
+    console.log("현재 시간 : ", new Date());
     console.log(
       "토큰 만료 시간 : ",
       new Date(localStorage.getItem("accessTokenExpiresIn") * 1) //자바스크립트 문자열-숫자
     );
-    console.log(
-      "토큰 데이터 타입 : ",
-      typeof (localStorage.getItem("accessTokenExpiresIn") * 1)
-    );
+    if (
+      new Date() <
+      new Date(
+        JSON.parse(atob(localStorage.getItem("accessToken").split(".")[1])).exp
+      )
+    ) {
+      console.log("토큰 만료");
+    } else {
+      console.log("토큰 유효");
+    }
+  };
+
+  // refresh 테스트 함수
+  const refresh = () => {
+    // 조건문 - 토큰이 만료
+    if (
+      // new Date() > new Date(localStorage.getItem("accessTokenExpiresIn") * 1)
+      new Date() <
+      new Date(
+        JSON.parse(atob(localStorage.getItem("accessToken").split(".")[1])).exp
+      )
+    ) {
+      console.log("토큰 만료");
+
+      axios.get("/api/refresh", {});
+    } else {
+      axios.get("/api/refresh", {});
+    }
   };
 
   return (
@@ -98,7 +122,10 @@ function Main() {
             <button onClick={tokeninfo}>토큰정보 확인</button>
             <button onClick={tokenPayload}>토큰 페이로드 확인</button>
           </div>
-          <button onClick={nowtime}>테스트-현재시간</button>
+          <div>
+            <button onClick={nowtime}>현재시간 테스트</button>
+            <button onClick={refresh}>refresh테스트</button>
+          </div>
         </div>
       ) : (
         <Link to="/login">
