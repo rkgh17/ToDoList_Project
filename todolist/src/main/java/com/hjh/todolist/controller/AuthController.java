@@ -1,7 +1,6 @@
 package com.hjh.todolist.controller;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -12,8 +11,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.hjh.todolist.auth.AuthInfo;
-import com.hjh.todolist.auth.Login;
+import java.util.Base64;
+
 import com.hjh.todolist.exception.TokenNotFoundException;
 import com.hjh.todolist.jwt.AuthorizationExtractor;
 import com.hjh.todolist.jwt.TokenManager;
@@ -63,19 +62,33 @@ public class AuthController {
 	 * 비교한 값이 일치하고, refresh token이 만료되지 않았다면 새로운 access token을 발급하여 응답해준다.
 	 */
 	@GetMapping("/refresh")
-	public ResponseEntity<Void> refresh(HttpServletRequest request, @Login AuthInfo authInfo){
+	public ResponseEntity<Void> refresh(HttpServletRequest request){
 		validateExistHeader(request);
-		Long memberId = authInfo.getId();
-		String refreshToken = AuthorizationExtractor.extractRefreshToken(request);
+//		String refreshToken = AuthorizationExtractor.extractRefreshToken(request);
+//		
+//		refreshTokenService.matches(refreshToken, memberId);
+//		
+//		String accessToken = tokenManager.createAccessToken(authInfo);
+//		
+//		return ResponseEntity.noContent()
+//				.header(HttpHeaders.AUTHORIZATION, "Bearer " + accessToken)
+//				.build();
 		
-		refreshTokenService.matches(refreshToken, memberId);
+//		System.out.println(request.getHeader(HttpHeaders.AUTHORIZATION));
+
+		String accessToken = AuthorizationExtractor.extractAccessToken(request);
+//		System.out.println(accessToken.split("\\.")[1]);
 		
-		String accessToken = tokenManager.createAccessToken(authInfo);
+		byte[] decodedBytes = Base64.getDecoder().decode(accessToken.split("\\.")[1]);
 		
-		return ResponseEntity.noContent()
-				.header(HttpHeaders.AUTHORIZATION, "Bearer " + accessToken)
-				.build();
+		System.out.print(new String(decodedBytes));
+		
+	
+		return null;
 	}
+	
+//	@PostMapping("/refresh")
+//	public void refresh(@RequestBody )
 	
 	private void validateExistHeader(HttpServletRequest request) {
 		String authorizationHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
