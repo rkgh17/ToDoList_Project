@@ -78,7 +78,7 @@ function Main() {
       // localStorage.getItem("accessTokenExpiresIn")
     );
     if (
-      new Date().getTime() >
+      new Date().getTime() <
       JSON.parse(atob(localStorage.getItem("accessToken").split(".")[1])).exp
     ) {
       console.log("토큰 만료");
@@ -92,7 +92,7 @@ function Main() {
     // 조건문 - 토큰이 만료
     if (
       // new Date() > new Date(localStorage.getItem("accessTokenExpiresIn") * 1)
-      new Date().getTime() >
+      new Date().getTime() <
       JSON.parse(atob(localStorage.getItem("accessToken").split(".")[1])).exp
     ) {
       console.log("토큰 만료");
@@ -104,6 +104,12 @@ function Main() {
       });
     } else {
       console.log("토큰 유효");
+      axios.get("/api/refresh", {
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("accessToken"),
+          refreshtoken: localStorage.getItem("refreshToken"),
+        },
+      });
     }
   };
 

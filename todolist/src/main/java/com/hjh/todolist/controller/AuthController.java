@@ -2,6 +2,9 @@ package com.hjh.todolist.controller;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -64,7 +67,7 @@ public class AuthController {
 	@GetMapping("/refresh")
 	public ResponseEntity<Void> refresh(HttpServletRequest request){
 		validateExistHeader(request);
-//		String refreshToken = AuthorizationExtractor.extractRefreshToken(request);
+		String refreshToken = AuthorizationExtractor.extractRefreshToken(request);
 //		
 //		refreshTokenService.matches(refreshToken, memberId);
 //		
@@ -76,12 +79,27 @@ public class AuthController {
 		
 //		System.out.println(request.getHeader(HttpHeaders.AUTHORIZATION));
 
-		String accessToken = AuthorizationExtractor.extractAccessToken(request);
+		String accessToken = AuthorizationExtractor.extractAccessToken(request); // 엑세스 토큰
 //		System.out.println(accessToken.split("\\.")[1]);
 		
-		byte[] decodedBytes = Base64.getDecoder().decode(accessToken.split("\\.")[1]);
+		byte[] decodedBytes = Base64.getDecoder().decode(accessToken.split("\\.")[1]); // 엑세스 토큰 payload 부분 복호화
 		
-		System.out.print(new String(decodedBytes));
+		System.out.println(new String(decodedBytes));
+		
+		JSONParser parser = new JSONParser();
+		try {
+			JSONObject jsonObject = (JSONObject) parser.parse(new String(decodedBytes));
+			System.out.println(jsonObject.get("sub"));
+			
+			// 유효하지 않은 리프레시 토큰????? -> 다음에 해결할 과제
+//			refreshTokenService.matches(refreshToken, Long.parseLong((String) jsonObject.get("sub")));
+			System.out.println(refreshToken);
+			
+			
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 	
 		return null;

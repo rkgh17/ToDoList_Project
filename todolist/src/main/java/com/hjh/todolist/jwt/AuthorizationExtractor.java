@@ -6,7 +6,7 @@ import java.util.Enumeration;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * HTTP 요청에서 Authorization 헤더를 추출하는 기능을 구현한 메서드
+ * HTTP 요청에서 Authorization 헤더를 추출하는 기능을 구현한 메서드.
  * extract 메서드를 통해 HTTP 요청에서 Authorization 헤더를 추출함.
  *
  */
