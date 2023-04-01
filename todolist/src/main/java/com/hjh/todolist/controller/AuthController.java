@@ -67,7 +67,11 @@ public class AuthController {
 	@GetMapping("/refresh")
 	public ResponseEntity<Void> refresh(HttpServletRequest request){
 		validateExistHeader(request);
-		String refreshToken = AuthorizationExtractor.extractRefreshToken(request);
+		
+//		String refreshToken = AuthorizationExtractor.extractRefreshToken(request);
+		// 위 코드 대체
+		String refreshToken = request.getHeader("refreshtoken");
+		
 //		
 //		refreshTokenService.matches(refreshToken, memberId);
 //		
@@ -82,17 +86,16 @@ public class AuthController {
 		String accessToken = AuthorizationExtractor.extractAccessToken(request); // 엑세스 토큰
 //		System.out.println(accessToken.split("\\.")[1]);
 		
-		byte[] decodedBytes = Base64.getDecoder().decode(accessToken.split("\\.")[1]); // 엑세스 토큰 payload 부분 복호화
+		// 엑세스 토큰 payload 부분 복호화
+		byte[] decodedBytes = Base64.getDecoder().decode(accessToken.split("\\.")[1]); 
+		//		System.out.println(new String(decodedBytes));
 		
-		System.out.println(new String(decodedBytes));
-		
+		// 복호화 정보를 JSONParser로 원하는 정보 (member id)를 추출하여 db값과 비교
 		JSONParser parser = new JSONParser();
 		try {
 			JSONObject jsonObject = (JSONObject) parser.parse(new String(decodedBytes));
-			System.out.println(jsonObject.get("sub"));
-			
-			// 유효하지 않은 리프레시 토큰????? -> 다음에 해결할 과제
-//			refreshTokenService.matches(refreshToken, Long.parseLong((String) jsonObject.get("sub")));
+			System.out.println(jsonObject.get("sub")); // member id	
+			refreshTokenService.matches(refreshToken, Long.parseLong((String) jsonObject.get("sub")));
 			System.out.println(refreshToken);
 			
 			

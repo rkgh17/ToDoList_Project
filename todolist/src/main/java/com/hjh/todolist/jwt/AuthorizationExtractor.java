@@ -22,7 +22,17 @@ public class AuthorizationExtractor {
     }
     
     public static String extractRefreshToken(HttpServletRequest request) {
-        Enumeration<String> headers = request.getHeaders("Refresh-Token");
+        Enumeration<String> headers = request.getHeaders("refreshtoken");
+        
+        // header 종류 구하기 -> network에서 확인 가능하긴 함
+//        java.util.Enumeration headerNames = request.getHeaderNames();
+//        while (headerNames.hasMoreElements()) {
+//            String headerName = (String) headerNames.nextElement();
+//            System.out.println(headerName + " = " + request.getHeader(headerName));
+//          }
+        
+        // 해법? getHeader를 하니 값이 나옴
+//        System.out.println(request.getHeader("refreshtoken"));
         return extract(headers);
     }
     
