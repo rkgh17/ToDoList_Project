@@ -20,6 +20,7 @@ import com.hjh.todolist.exception.TokenNotFoundException;
 import com.hjh.todolist.jwt.AuthorizationExtractor;
 import com.hjh.todolist.jwt.TokenManager;
 import com.hjh.todolist.jwt.dto.TokenDto;
+import com.hjh.todolist.member.Member;
 import com.hjh.todolist.member.MemberRepository;
 import com.hjh.todolist.member.dto.MemberRequestDto;
 import com.hjh.todolist.member.dto.MemberResponseDto;
@@ -27,6 +28,8 @@ import com.hjh.todolist.refreshtoken.RefreshTokenService;
 import com.hjh.todolist.service.AuthService;
 
 import java.util.Objects;
+import java.util.Optional;
+
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -59,22 +62,20 @@ public class AuthController {
 //		AuthInfo authInfo = authService.login(requestDto);
 //	}
 	
+	
 	/**
 	 * access token과 refresh token을 담는 헤더가 존재하는지 확인하고 헤더에 담긴 refresh token을 뽑아온 뒤,
 	 * refresh token 테이블에 담긴 값과 요청받은 값을 비교한다. 
 	 * 비교한 값이 일치하고, refresh token이 만료되지 않았다면 새로운 access token을 발급하여 응답해준다.
 	 */
 	@GetMapping("/refresh")
-	public ResponseEntity<Void> refresh(HttpServletRequest request){
+	public ResponseEntity<TokenDto> refresh(HttpServletRequest request){
 		validateExistHeader(request);
 		
 //		String refreshToken = AuthorizationExtractor.extractRefreshToken(request);
 		// 위 코드 대체
 		String refreshToken = request.getHeader("refreshtoken");
-		
-//		
-//		refreshTokenService.matches(refreshToken, memberId);
-//		
+	
 //		String accessToken = tokenManager.createAccessToken(authInfo);
 //		
 //		return ResponseEntity.noContent()
@@ -90,7 +91,7 @@ public class AuthController {
 		byte[] decodedBytes = Base64.getDecoder().decode(accessToken.split("\\.")[1]); 
 		//		System.out.println(new String(decodedBytes));
 		
-		// 복호화 정보를 JSONParser로 원하는 정보 (member id)를 추출하여 db값과 비교
+		// 복호화 정보를 JSONParser로 원하는 정보 (member id)를 추출하여 refreshToken값을 db 안의 값과 비교
 		JSONParser parser = new JSONParser();
 		try {
 			JSONObject jsonObject = (JSONObject) parser.parse(new String(decodedBytes));
@@ -98,12 +99,28 @@ public class AuthController {
 			refreshTokenService.matches(refreshToken, Long.parseLong((String) jsonObject.get("sub")));
 			System.out.println(refreshToken);
 			
+			// 로그인 메서드에 필요한 정보 추출
+			Optional<Member> member = memberRepository.findById(Long.parseLong((String) jsonObject.get("sub")));
+			
+			MemberRequestDto requestDto =  MemberRequestDto.builder()
+														.email(member.get().getEmail())
+														.password(member.get().getPassword())
+														.nickname(member.get().getNickname())
+														.build();
+			System.out.println("사용자 정보 추출");
+			System.out.println("닉네임 : " + requestDto.getNickname());
+			System.out.println("이메일 : " + requestDto.getEmail());
+			System.out.println("비밀번호 : " + requestDto.getPassword());
+			
+			// 새로운 리프레쉬 토큰과 엑세스 토큰 발급
+			return ResponseEntity.ok(authService.login(requestDto));
 			
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
+			System.out.println("토큰이 올바르지 않습니다.");
 			e.printStackTrace();
 		}
 		
+		System.out.print("refresh실패");
 	
 		return null;
 	}

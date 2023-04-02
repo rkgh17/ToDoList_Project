@@ -78,7 +78,7 @@ function Main() {
       // localStorage.getItem("accessTokenExpiresIn")
     );
     if (
-      new Date().getTime() <
+      new Date().getTime() >
       JSON.parse(atob(localStorage.getItem("accessToken").split(".")[1])).exp
     ) {
       console.log("토큰 만료");
@@ -104,12 +104,25 @@ function Main() {
       });
     } else {
       console.log("토큰 유효");
-      axios.get("/api/refresh", {
-        headers: {
-          Authorization: "Bearer " + localStorage.getItem("accessToken"),
-          refreshtoken: localStorage.getItem("refreshToken"),
-        },
-      });
+      axios
+        .get("/api/refresh", {
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("accessToken"),
+            refreshtoken: localStorage.getItem("refreshToken"),
+          },
+        })
+        .then((res) => {
+          // refresh성공
+          if (res.status === 200) {
+            console.log("refresh 성공!");
+            console.log(res.data.accessToken);
+            console.log(res.data.refreshToken);
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+          alert("refresh 실패!");
+        });
     }
   };
 
@@ -131,6 +144,8 @@ function Main() {
           </div>
           <div>
             <button onClick={nowtime}>현재시간 테스트</button>
+          </div>
+          <div>
             <button onClick={refresh}>refresh테스트</button>
           </div>
         </div>
