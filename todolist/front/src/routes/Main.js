@@ -51,12 +51,18 @@ function Main() {
     console.log("엑세스 토큰 : ", localStorage.getItem("accessToken"));
     console.log(
       "엑세스 토큰 만료시간 : ",
-      localStorage.getItem("accessTokenExpiresIn")
+      localStorage.getItem("accessTokenExpiresIn") +
+        " (" +
+        new Date(localStorage.getItem("accessTokenExpiresIn") * 1) +
+        ")"
     );
     console.log("리프레쉬 토큰 : ", localStorage.getItem("refreshToken"));
     console.log(
       "리프레쉬 토큰 만료시간 : ",
-      localStorage.getItem("refreshTokenExpiresIn")
+      localStorage.getItem("refreshTokenExpiresIn") +
+        " (" +
+        new Date(localStorage.getItem("refreshTokenExpiresIn") * 1) +
+        ")"
     );
   };
 
@@ -69,7 +75,7 @@ function Main() {
     );
   };
 
-  // 만료시간 테스트 함수
+  // 만료시간 테스트 함수 - 현재시간 테스트
   const nowtime = () => {
     console.log("현재 시간 : ", new Date());
     console.log(
@@ -78,7 +84,7 @@ function Main() {
       // localStorage.getItem("accessTokenExpiresIn")
     );
     if (
-      new Date().getTime() >
+      new Date().getTime() <
       JSON.parse(atob(localStorage.getItem("accessToken").split(".")[1])).exp
     ) {
       console.log("토큰 만료");
@@ -113,10 +119,9 @@ function Main() {
         })
         .then((res) => {
           // refresh성공
-          if (res.status === 200) {
+          if (res.status === 204) {
             console.log("refresh 성공!");
-            console.log(res.data.accessToken);
-            console.log(res.data.refreshToken);
+            console.log(res.headers.authorization);
           }
         })
         .catch((err) => {

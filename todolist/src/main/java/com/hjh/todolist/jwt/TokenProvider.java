@@ -167,8 +167,8 @@ public class TokenProvider implements TokenManager{
 		Date validity = new Date(now.getTime() + ACCESS_TOKEN_EXPIRE_TIME);
 		
 		return Jwts.builder()
-				.claim("id", authInfo.getId())
-				.claim("role", authInfo.getRole_type())
+				.claim("sub", authInfo.getId())
+				.claim("auth", authInfo.getRole_type())
 				.claim("nickname", authInfo.getNickname())
 				.setIssuedAt(now)
 				.setExpiration(validity)

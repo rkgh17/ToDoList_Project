@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Base64;
 
+import com.hjh.todolist.auth.AuthInfo;
 import com.hjh.todolist.exception.TokenNotFoundException;
 import com.hjh.todolist.jwt.AuthorizationExtractor;
 import com.hjh.todolist.jwt.TokenManager;
@@ -69,11 +70,11 @@ public class AuthController {
 	 * 비교한 값이 일치하고, refresh token이 만료되지 않았다면 새로운 access token을 발급하여 응답해준다.
 	 */
 	@GetMapping("/refresh")
-	public ResponseEntity<TokenDto> refresh(HttpServletRequest request){
+	public ResponseEntity<Void> refresh(HttpServletRequest request){
 		validateExistHeader(request);
 		
 //		String refreshToken = AuthorizationExtractor.extractRefreshToken(request);
-		// 위 코드 대체
+		// 위 코드 대체 - refreshToken 얻기
 		String refreshToken = request.getHeader("refreshtoken");
 	
 //		String accessToken = tokenManager.createAccessToken(authInfo);
@@ -102,26 +103,30 @@ public class AuthController {
 			// 로그인 메서드에 필요한 정보 추출
 			Optional<Member> member = memberRepository.findById(Long.parseLong((String) jsonObject.get("sub")));
 			
-			MemberRequestDto requestDto =  MemberRequestDto.builder()
-														.email(member.get().getEmail())
-														.password(member.get().getPassword())
-														.nickname(member.get().getNickname())
-														.build();
-			System.out.println("사용자 정보 추출");
-			System.out.println("닉네임 : " + requestDto.getNickname());
-			System.out.println("이메일 : " + requestDto.getEmail());
-			System.out.println("비밀번호 : " + requestDto.getPassword());
+//			MemberRequestDto requestDto =  MemberRequestDto.builder()
+//														.email(member.get().getEmail())
+//														.password(member.get().getPassword())
+//														.nickname(member.get().getNickname())
+//														.build();
+//			System.out.println("사용자 정보 추출");
+//			System.out.println("닉네임 : " + requestDto.getNickname());
+//			System.out.println("이메일 : " + requestDto.getEmail());
+//			System.out.println("비밀번호 : " + requestDto.getPassword());
+			
+			AuthInfo authInfo = new AuthInfo(Long.parseLong((String) jsonObject.get("sub")), member.get().getRoleType() , member.get().getNickname());
+			
+			String newAccessToken = tokenManager.createAccessToken(authInfo);
 			
 			// 새로운 리프레쉬 토큰과 엑세스 토큰 발급
-			return ResponseEntity.ok(authService.login(requestDto));
-			
+			return ResponseEntity.noContent()
+					.header(HttpHeaders.AUTHORIZATION, "Bearer " + newAccessToken)
+					.build();
+						
 		} catch (ParseException e) {
 			System.out.println("토큰이 올바르지 않습니다.");
 			e.printStackTrace();
 		}
-		
-		System.out.print("refresh실패");
-	
+					
 		return null;
 	}
 	

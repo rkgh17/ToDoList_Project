@@ -42,25 +42,16 @@ public class AuthService {
 	}
 	
 	public TokenDto login(MemberRequestDto requestDto) {
-		System.out.println("오류지점1");
 		
 		UsernamePasswordAuthenticationToken authenticationToken = requestDto.toAuthentication();
-		
-		System.out.println("오류지점2");
-		
+				
 		Authentication authentication = managerBuilder.getObject().authenticate(authenticationToken);
-		
-		System.out.println("오류지점3");
 		
 		// 반환할 토큰
 		TokenDto tokens = tokenProvider.generateTokenDto(authentication);
-		
-		System.out.println("오류지점4");
-		
+	
 		// 리프레시토큰 db에 저장
 		refreshTokenService.saveToken(tokens.getRefreshToken(), memberRepository.findyByNativeQuery(requestDto.getEmail()));
-		
-		System.out.println("오류지점5");
 		
 		return tokens; 
 	}
