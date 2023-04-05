@@ -48,7 +48,7 @@ public class TokenProvider implements TokenManager{
 	}
 	
 	// 토큰 생성
-	public TokenDto generateTokenDto(Authentication authentication) {
+	public TokenDto generateTokenDto(Authentication authentication, String nickname) {
 		String authorities = authentication.getAuthorities().stream()
 				.map(GrantedAuthority::getAuthority)
 				.collect(Collectors.joining(","));
@@ -63,6 +63,7 @@ public class TokenProvider implements TokenManager{
 		String accessToken = Jwts.builder()
 				.setSubject(authentication.getName())
 				.claim(AUTHORITIES_KEY, authorities)
+				.claim("nickname", nickname)
 				.setExpiration(tokenExpiresIn)
 				.signWith(key, SignatureAlgorithm.HS512)
 				.compact();
@@ -167,7 +168,7 @@ public class TokenProvider implements TokenManager{
 		Date validity = new Date(now.getTime() + ACCESS_TOKEN_EXPIRE_TIME);
 		
 		return Jwts.builder()
-				.claim("sub", authInfo.getId())
+				.claim("sub", String.valueOf(authInfo.getId()))
 				.claim("auth", authInfo.getRole_type())
 				.claim("nickname", authInfo.getNickname())
 				.setIssuedAt(now)

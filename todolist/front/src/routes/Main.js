@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./Routes.css";
 import { FcTodoList } from "react-icons/fc";
 import axios from "axios";
@@ -32,6 +32,8 @@ function Main() {
 
   // 로그아웃 함수
   const handleLogout = () => {
+    setIsLoggedIn(false);
+
     // 토큰 삭제
     // setAccessToken(null);
     // setRefreshToken(null);
@@ -77,22 +79,22 @@ function Main() {
 
   // 만료시간 테스트 함수 - 현재시간 테스트
   const nowtime = () => {
-    const now = new Date();
+    const now = new Date(); //현재시간
+    const tokenExp =
+      JSON.parse(atob(localStorage.getItem("accessToken").split(".")[1])).exp *
+      1000; // 밀리초변환
 
     console.log("현재 시간 : " + now + " (" + now.getTime() + ")");
     console.log(
       "토큰 만료 시간 : " +
-        new Date(localStorage.getItem("accessTokenExpiresIn") * 1) + //자바스크립트 문자열-숫자
+        new Date(tokenExp) + //자바스크립트 문자열-숫자
         " (" +
-        JSON.parse(atob(localStorage.getItem("accessToken").split(".")[1]))
-          .exp +
+        tokenExp +
         ")"
       // localStorage.getItem("accessTokenExpiresIn")
     );
-    if (
-      new Date().getTime() >
-      JSON.parse(atob(localStorage.getItem("accessToken").split(".")[1])).exp
-    ) {
+
+    if (now.getTime() > tokenExp) {
       console.log("토큰 만료");
     } else {
       console.log("토큰 유효");
@@ -101,21 +103,19 @@ function Main() {
 
   // refresh 테스트 함수
   const refresh = () => {
+    const now = new Date(); //현재시간
+    const tokenExp =
+      JSON.parse(atob(localStorage.getItem("accessToken").split(".")[1])).exp *
+      1000; // 밀리초변환
+
     // 조건문 - 토큰이 만료
     if (
       // new Date() > new Date(localStorage.getItem("accessTokenExpiresIn") * 1)
-      new Date().getTime() >
-      JSON.parse(atob(localStorage.getItem("accessToken").split(".")[1])).exp
+      now.getTime() < tokenExp
     ) {
-      console.log("토큰 만료");
-      axios.get("/api/refresh", {
-        headers: {
-          Authorization: "Bearer " + localStorage.getItem("accessToken"),
-          refreshtoken: localStorage.getItem("refreshToken"),
-        },
-      });
-    } else {
       console.log("토큰 유효");
+    } else {
+      console.log("토큰 만료");
       axios
         .get("/api/refresh", {
           headers: {
@@ -127,15 +127,28 @@ function Main() {
           // refresh성공
           if (res.status === 204) {
             console.log("refresh 성공!");
-            console.log(res.headers.authorization);
+            // console.log(res.headers.authorization);
+
+            // 엑세스 토큰 새로고침
+            localStorage.removeItem("accessToken");
+            localStorage.setItem(
+              "accessToken",
+              res.headers.authorization.substr(7)
+            ); // Bearer 제거
           }
         })
         .catch((err) => {
           console.log(err);
-          alert("refresh 실패!");
+          alert("refresh 실패.");
+          setIsLoggedIn(false);
+          window.localStorage.clear();
+          navigate("/login");
         });
     }
   };
+
+  // 네비게이터
+  const navigate = useNavigate();
 
   return (
     <div className="Main">

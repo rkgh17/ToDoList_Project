@@ -71,6 +71,7 @@ public class AuthController {
 	 */
 	@GetMapping("/refresh")
 	public ResponseEntity<Void> refresh(HttpServletRequest request){
+		
 		validateExistHeader(request);
 		
 //		String refreshToken = AuthorizationExtractor.extractRefreshToken(request);
@@ -84,11 +85,12 @@ public class AuthController {
 //				.build();
 		
 //		System.out.println(request.getHeader(HttpHeaders.AUTHORIZATION));
-
-		String accessToken = AuthorizationExtractor.extractAccessToken(request); // 엑세스 토큰
+		
+		// 엑세스 토큰 가져오기
+		String accessToken = AuthorizationExtractor.extractAccessToken(request);
 //		System.out.println(accessToken.split("\\.")[1]);
 		
-		// 엑세스 토큰 payload 부분 복호화
+		// 엑세스 토큰 payload 부분 복호화 -> 사용자 정보 추출
 		byte[] decodedBytes = Base64.getDecoder().decode(accessToken.split("\\.")[1]); 
 		//		System.out.println(new String(decodedBytes));
 		
@@ -112,11 +114,11 @@ public class AuthController {
 //			System.out.println("닉네임 : " + requestDto.getNickname());
 //			System.out.println("이메일 : " + requestDto.getEmail());
 //			System.out.println("비밀번호 : " + requestDto.getPassword());
-			
+				
 			AuthInfo authInfo = new AuthInfo(Long.parseLong((String) jsonObject.get("sub")), member.get().getRoleType() , member.get().getNickname());
-			
+								
 			String newAccessToken = tokenManager.createAccessToken(authInfo);
-			
+						
 			// 새로운 리프레쉬 토큰과 엑세스 토큰 발급
 			return ResponseEntity.noContent()
 					.header(HttpHeaders.AUTHORIZATION, "Bearer " + newAccessToken)

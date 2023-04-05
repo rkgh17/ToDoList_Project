@@ -13,5 +13,9 @@ public interface MemberRepository extends JpaRepository<Member, Long>{
 	
 	// refreshtoken생성시 memberid필요
 	@Query(value = "SELECT id FROM member WHERE email = ?", nativeQuery = true)
-	Long findyByNativeQuery(String email);
+	Long NativeQuery_findID(String email);
+	
+	@Query(value = "SELECT nickname FROM member WHERE email = ?", nativeQuery = true)
+	String NativeQuery_findNickname(String email);
+	
 }

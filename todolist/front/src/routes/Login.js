@@ -95,7 +95,7 @@ function Login() {
               <input
                 type="id"
                 className="form-control"
-                placeholder="Enter ID"
+                placeholder="Enter Email"
                 name="input_id"
                 value={inputId}
                 onChange={handleInputId}
@@ -107,7 +107,7 @@ function Login() {
               <input
                 type="password"
                 className="form-control"
-                placeholder="Enter password"
+                placeholder="Enter Password"
                 name="input_pw"
                 value={inputPw}
                 onChange={handleInputPw}

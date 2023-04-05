@@ -47,11 +47,14 @@ public class AuthService {
 				
 		Authentication authentication = managerBuilder.getObject().authenticate(authenticationToken);
 		
+		// id값을 통해 닉네임을 구하는 메서드
+		String Nickname = memberRepository.NativeQuery_findNickname(requestDto.getEmail());
+		
 		// 반환할 토큰
-		TokenDto tokens = tokenProvider.generateTokenDto(authentication);
+		TokenDto tokens = tokenProvider.generateTokenDto(authentication, Nickname);
 	
 		// 리프레시토큰 db에 저장
-		refreshTokenService.saveToken(tokens.getRefreshToken(), memberRepository.findyByNativeQuery(requestDto.getEmail()));
+		refreshTokenService.saveToken(tokens.getRefreshToken(), memberRepository.NativeQuery_findID(requestDto.getEmail()));
 		
 		return tokens; 
 	}
