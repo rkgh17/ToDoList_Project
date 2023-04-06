@@ -77,12 +77,15 @@ function Main() {
     );
   };
 
-  // 만료시간 테스트 함수 - 현재시간 테스트
+  // 현재시간 테스트 - 만료시간 테스트 함수
   const nowtime = () => {
     const now = new Date(); //현재시간
     const tokenExp =
       JSON.parse(atob(localStorage.getItem("accessToken").split(".")[1])).exp *
       1000; // 밀리초변환
+    const refreshTokenExp =
+      JSON.parse(atob(localStorage.getItem("refreshToken").split(".")[1])).exp *
+      1000;
 
     console.log("현재 시간 : " + now + " (" + now.getTime() + ")");
     console.log(
@@ -93,6 +96,13 @@ function Main() {
         ")"
       // localStorage.getItem("accessTokenExpiresIn")
     );
+    console.log(
+      "리프레쉬 토큰 만료 시간 : " +
+        new Date(refreshTokenExp) +
+        " (" +
+        refreshTokenExp +
+        ")"
+    );
 
     if (now.getTime() > tokenExp) {
       console.log("토큰 만료");
@@ -101,20 +111,37 @@ function Main() {
     }
   };
 
-  // refresh 테스트 함수
+  // refresh 함수
   const refresh = () => {
     const now = new Date(); //현재시간
     const tokenExp =
       JSON.parse(atob(localStorage.getItem("accessToken").split(".")[1])).exp *
       1000; // 밀리초변환
+    const refreshTokenExp =
+      JSON.parse(atob(localStorage.getItem("refreshToken").split(".")[1])).exp *
+      1000; // 밀리초변환
 
-    // 조건문 - 토큰이 만료
+    // 조건1 - access 토큰 체크
     if (
       // new Date() > new Date(localStorage.getItem("accessTokenExpiresIn") * 1)
       now.getTime() < tokenExp
     ) {
       console.log("토큰 유효");
-    } else {
+    }
+    // 조건 2 - refresh 토큰 체크
+    else if (now.getTime() < refreshTokenExp) {
+      console.log("refresh토큰 만료. 로그인 재 수행");
+      axios
+        .get("/api/logout", {
+          sub: JSON.parse(
+            atob(localStorage.getItem("refreshToken").split(".")[1])
+          ).sub,
+        })
+        .then((res) => {})
+        .catch((err) => {});
+    }
+    // 조건 3 - 토큰 만료
+    else {
       console.log("토큰 만료");
       axios
         .get("/api/refresh", {
@@ -129,7 +156,7 @@ function Main() {
             console.log("refresh 성공!");
             // console.log(res.headers.authorization);
 
-            // 엑세스 토큰 새로고침
+            // 엑세스 토큰 새로고침 - 로컬 스토리지 저장
             localStorage.removeItem("accessToken");
             localStorage.setItem(
               "accessToken",
@@ -145,6 +172,19 @@ function Main() {
           navigate("/login");
         });
     }
+  };
+
+  const refreshlogout = () => {
+    console.log("리프레쉬 로그아웃 수행");
+
+    axios
+      .get("/api/logout", {
+        sub: JSON.parse(
+          atob(localStorage.getItem("refreshToken").split(".")[1])
+        ).sub,
+      })
+      .then((res) => {})
+      .catch((err) => {});
   };
 
   // 네비게이터
@@ -171,6 +211,9 @@ function Main() {
           </div>
           <div>
             <button onClick={refresh}>refresh테스트</button>
+          </div>
+          <div>
+            <button onClick={refreshlogout}>리프레쉬 로그아웃 테스트</button>
           </div>
         </div>
       ) : (
