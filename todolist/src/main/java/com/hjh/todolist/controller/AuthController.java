@@ -132,8 +132,19 @@ public class AuthController {
 		return null;
 	}
 	
-//	@PostMapping("/refresh")
-//	public void refresh(@RequestBody )
+	/**
+	 *	로그아웃 메서드.
+	 *	로그아웃 요청 시, request에 포함된 id값을 통해 refreshtoken DB값을 찾고, 삭제한다.
+	 * 
+	 */
+	@GetMapping("/logout")
+	public ResponseEntity<Void> logout(HttpServletRequest request){
+		System.out.println(request.getHeader("sub"));
+		System.out.println(request.getHeader("sub").getClass().getName());
+		refreshTokenService.deleteToken(Long.parseLong(request.getHeader("sub")));
+		return null;
+		
+	}
 	
 	private void validateExistHeader(HttpServletRequest request) {
 		String authorizationHeader = request.getHeader(HttpHeaders.AUTHORIZATION);

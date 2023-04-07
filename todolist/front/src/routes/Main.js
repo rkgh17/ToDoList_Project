@@ -32,20 +32,45 @@ function Main() {
 
   // 로그아웃 함수
   const handleLogout = () => {
-    setIsLoggedIn(false);
+    // 로그아웃 api get 요청
+    axios
+      .get("/api/logout", {
+        headers: {
+          sub: JSON.parse(
+            atob(localStorage.getItem("refreshToken").split(".")[1])
+          ).sub,
+        },
+      })
+      .then((res) => {
+        console.log(res);
+
+        if (res.status === 200) {
+          setIsLoggedIn(false);
+          window.localStorage.clear();
+          navigate("/login");
+        }
+      })
+      .catch((err) => {
+        // 로그아웃 수행
+        setIsLoggedIn(false);
+        window.localStorage.clear();
+        navigate("/login");
+      });
+
+    // setIsLoggedIn(false);
 
     // 토큰 삭제
     // setAccessToken(null);
     // setRefreshToken(null);
 
     // 로컬 스토리지 전체 삭제
-    window.localStorage.clear();
+    // window.localStorage.clear();
 
     // 로그인 상태 변경
     // localStorage.removeItem("isLoggedIn");
     // localStorage.removeItem("accessToken");
     // localStorage.removeItem("refreshToken");
-    window.location.reload();
+    // window.location.reload();
   };
 
   // 토큰 정보 함수
@@ -129,16 +154,9 @@ function Main() {
       console.log("토큰 유효");
     }
     // 조건 2 - refresh 토큰 체크
-    else if (now.getTime() < refreshTokenExp) {
+    else if (now.getTime() > refreshTokenExp) {
       console.log("refresh토큰 만료. 로그인 재 수행");
-      axios
-        .get("/api/logout", {
-          sub: JSON.parse(
-            atob(localStorage.getItem("refreshToken").split(".")[1])
-          ).sub,
-        })
-        .then((res) => {})
-        .catch((err) => {});
+      handleLogout();
     }
     // 조건 3 - 토큰 만료
     else {
@@ -174,18 +192,32 @@ function Main() {
     }
   };
 
-  const refreshlogout = () => {
-    console.log("리프레쉬 로그아웃 수행");
-
-    axios
-      .get("/api/logout", {
-        sub: JSON.parse(
-          atob(localStorage.getItem("refreshToken").split(".")[1])
-        ).sub,
-      })
-      .then((res) => {})
-      .catch((err) => {});
-  };
+  // 리프레쉬 로그아웃 테스트
+  // const refreshlogout = () => {
+  //   console.log("리프레쉬 로그아웃 수행");
+  //   axios
+  //     .get("/api/logout", {
+  //       headers: {
+  //         sub: JSON.parse(
+  //           atob(localStorage.getItem("refreshToken").split(".")[1])
+  //         ).sub,
+  //       },
+  //     })
+  //     .then((res) => {
+  //       console.log(res);
+  //       if (res.status === 200) {
+  //         setIsLoggedIn(false);
+  //         window.localStorage.clear();
+  //         navigate("/login");
+  //       }
+  //     })
+  //     .catch((err) => {
+  //       // 로그아웃 수행
+  //       setIsLoggedIn(false);
+  //       window.localStorage.clear();
+  //       navigate("/login");
+  //     });
+  // };
 
   // 네비게이터
   const navigate = useNavigate();
@@ -212,9 +244,9 @@ function Main() {
           <div>
             <button onClick={refresh}>refresh테스트</button>
           </div>
-          <div>
+          {/* <div>
             <button onClick={refreshlogout}>리프레쉬 로그아웃 테스트</button>
-          </div>
+          </div> */}
         </div>
       ) : (
         <Link to="/login">
