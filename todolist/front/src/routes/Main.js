@@ -8,7 +8,7 @@ import axios from "axios";
 
 function Main() {
   // useContext을 사용하여 로그인 상태값관리
-  const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
+  const { isLoggedIn, setIsLoggedIn, logout } = useContext(AuthContext);
 
   // const [accessToken, setAccessToken] = useState(
   //   localStorage.getItem("accessToken") || null
@@ -32,45 +32,7 @@ function Main() {
 
   // 로그아웃 함수
   const handleLogout = () => {
-    // 로그아웃 api get 요청
-    axios
-      .get("/api/logout", {
-        headers: {
-          sub: JSON.parse(
-            atob(localStorage.getItem("refreshToken").split(".")[1])
-          ).sub,
-        },
-      })
-      .then((res) => {
-        console.log(res);
-
-        if (res.status === 200) {
-          setIsLoggedIn(false);
-          window.localStorage.clear();
-          navigate("/login");
-        }
-      })
-      .catch((err) => {
-        // 로그아웃 수행
-        setIsLoggedIn(false);
-        window.localStorage.clear();
-        navigate("/login");
-      });
-
-    // setIsLoggedIn(false);
-
-    // 토큰 삭제
-    // setAccessToken(null);
-    // setRefreshToken(null);
-
-    // 로컬 스토리지 전체 삭제
-    // window.localStorage.clear();
-
-    // 로그인 상태 변경
-    // localStorage.removeItem("isLoggedIn");
-    // localStorage.removeItem("accessToken");
-    // localStorage.removeItem("refreshToken");
-    // window.location.reload();
+    logout();
   };
 
   // 토큰 정보 함수

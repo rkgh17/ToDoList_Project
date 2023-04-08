@@ -3,25 +3,29 @@
  */
 
 import { createContext, useState } from "react";
+
 export const AuthContext = createContext();
 
 const AuthContextProvider = ({ children }) => {
-  const [isLoggedIn, setIsLoggedIn] = useState(
-    JSON.parse(localStorage.getItem("isLoggedIn")) || false
-  );
+  // const [isLoggedIn, setIsLoggedIn] = useState(
+  //   JSON.parse(localStorage.getItem("isLoggedIn")) || false
+  // );
 
-  const login = () => {
-    setIsLoggedIn(true);
-  };
+  // const login = () => {};
 
   const logout = () => {
-    setIsLoggedIn(false);
+    // console.log("로그아웃");
+  };
+
+  const contextValue = {
+    //   isLoggedIn,
+    //   setIsLoggedIn,
+    //   login,
+    logout,
   };
 
   return (
-    <AuthContext.Provider value={{ isLoggedIn, setIsLoggedIn, login, logout }}>
-      {children}
-    </AuthContext.Provider>
+    <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>
   );
 };
 
