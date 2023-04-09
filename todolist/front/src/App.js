@@ -50,8 +50,70 @@ function App() {
       });
   };
 
+  // refresh 로직
+  const refresh = () => {
+    // refresh에 필요한 현재 시간과 각 토큰들의 만료시간
+    const now = new Date(); //현재시간
+    const tokenExp =
+      JSON.parse(atob(localStorage.getItem("accessToken").split(".")[1])).exp *
+      1000; // 밀리초변환
+    const refreshTokenExp =
+      JSON.parse(atob(localStorage.getItem("refreshToken").split(".")[1])).exp *
+      1000; // 밀리초변환
+
+    // 조건1 - access 토큰 체크
+    // 현재 시간이 토큰 만료시간보다 작으면 토큰 유효
+    if (
+      // new Date() > new Date(localStorage.getItem("accessTokenExpiresIn") * 1)
+      now.getTime() < tokenExp
+    ) {
+      console.log("토큰 유효");
+    }
+    // 조건 2 - refresh 토큰 체크
+    // 현재 시간이 refresh 토큰 만료시간보다 크면 강제로 로그아웃 수행
+    else if (now.getTime() > refreshTokenExp) {
+      console.log("refresh토큰 만료. 로그인 재 수행");
+      logout();
+    }
+    // 조건 3 - 토큰 만료
+    // 토큰이 만료되었으므로, 백엔드와 통신하여 새 엑세스 토큰 발급
+    else {
+      console.log("토큰 만료");
+      axios
+        .get("/api/refresh", {
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("accessToken"),
+            refreshtoken: localStorage.getItem("refreshToken"),
+          },
+        })
+        .then((res) => {
+          // refresh성공
+          if (res.status === 204) {
+            console.log("refresh 성공!");
+            // console.log(res.headers.authorization);
+
+            // 엑세스 토큰 새로고침 - 로컬 스토리지 저장
+            localStorage.removeItem("accessToken");
+            localStorage.setItem(
+              "accessToken",
+              res.headers.authorization.substr(7)
+            ); // Bearer 제거
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+          alert("refresh 실패.");
+          setIsLoggedIn(false);
+          window.localStorage.clear();
+          window.location.replace("/login");
+        });
+    }
+  };
+
   return (
-    <AuthContext.Provider value={{ isLoggedIn, setIsLoggedIn, logout }}>
+    <AuthContext.Provider
+      value={{ isLoggedIn, setIsLoggedIn, logout, refresh }}
+    >
       {" "}
       {/* AuthContext.Provider 추가 */}
       <RouterProvider router={router} />

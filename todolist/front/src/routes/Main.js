@@ -8,7 +8,8 @@ import axios from "axios";
 
 function Main() {
   // useContext을 사용하여 로그인 상태값관리
-  const { isLoggedIn, setIsLoggedIn, logout } = useContext(AuthContext);
+  const { isLoggedIn, setIsLoggedIn, logout, refresh } =
+    useContext(AuthContext);
 
   // const [accessToken, setAccessToken] = useState(
   //   localStorage.getItem("accessToken") || null
@@ -30,10 +31,10 @@ function Main() {
     setIsLoggedIn(JSON.parse(localStorage.getItem("isLoggedIn")) || false);
   }, [setIsLoggedIn]);
 
-  // 로그아웃 함수
-  const handleLogout = () => {
-    logout();
-  };
+  useEffect(() => {
+    // 페이지 로드 시 토큰 만료시간 검사.
+    refresh();
+  }, []);
 
   // 토큰 정보 함수
   const tokeninfo = () => {
@@ -99,60 +100,60 @@ function Main() {
   };
 
   // refresh 함수
-  const refresh = () => {
-    const now = new Date(); //현재시간
-    const tokenExp =
-      JSON.parse(atob(localStorage.getItem("accessToken").split(".")[1])).exp *
-      1000; // 밀리초변환
-    const refreshTokenExp =
-      JSON.parse(atob(localStorage.getItem("refreshToken").split(".")[1])).exp *
-      1000; // 밀리초변환
+  // const refresh = () => {
+  //   const now = new Date(); //현재시간
+  //   const tokenExp =
+  //     JSON.parse(atob(localStorage.getItem("accessToken").split(".")[1])).exp *
+  //     1000; // 밀리초변환
+  //   const refreshTokenExp =
+  //     JSON.parse(atob(localStorage.getItem("refreshToken").split(".")[1])).exp *
+  //     1000; // 밀리초변환
 
-    // 조건1 - access 토큰 체크
-    if (
-      // new Date() > new Date(localStorage.getItem("accessTokenExpiresIn") * 1)
-      now.getTime() < tokenExp
-    ) {
-      console.log("토큰 유효");
-    }
-    // 조건 2 - refresh 토큰 체크
-    else if (now.getTime() > refreshTokenExp) {
-      console.log("refresh토큰 만료. 로그인 재 수행");
-      handleLogout();
-    }
-    // 조건 3 - 토큰 만료
-    else {
-      console.log("토큰 만료");
-      axios
-        .get("/api/refresh", {
-          headers: {
-            Authorization: "Bearer " + localStorage.getItem("accessToken"),
-            refreshtoken: localStorage.getItem("refreshToken"),
-          },
-        })
-        .then((res) => {
-          // refresh성공
-          if (res.status === 204) {
-            console.log("refresh 성공!");
-            // console.log(res.headers.authorization);
+  //   // 조건1 - access 토큰 체크
+  //   if (
+  //     // new Date() > new Date(localStorage.getItem("accessTokenExpiresIn") * 1)
+  //     now.getTime() < tokenExp
+  //   ) {
+  //     console.log("토큰 유효");
+  //   }
+  //   // 조건 2 - refresh 토큰 체크
+  //   else if (now.getTime() > refreshTokenExp) {
+  //     console.log("refresh토큰 만료. 로그인 재 수행");
+  //     logout();
+  //   }
+  //   // 조건 3 - 토큰 만료
+  //   else {
+  //     console.log("토큰 만료");
+  //     axios
+  //       .get("/api/refresh", {
+  //         headers: {
+  //           Authorization: "Bearer " + localStorage.getItem("accessToken"),
+  //           refreshtoken: localStorage.getItem("refreshToken"),
+  //         },
+  //       })
+  //       .then((res) => {
+  //         // refresh성공
+  //         if (res.status === 204) {
+  //           console.log("refresh 성공!");
+  //           // console.log(res.headers.authorization);
 
-            // 엑세스 토큰 새로고침 - 로컬 스토리지 저장
-            localStorage.removeItem("accessToken");
-            localStorage.setItem(
-              "accessToken",
-              res.headers.authorization.substr(7)
-            ); // Bearer 제거
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-          alert("refresh 실패.");
-          setIsLoggedIn(false);
-          window.localStorage.clear();
-          navigate("/login");
-        });
-    }
-  };
+  //           // 엑세스 토큰 새로고침 - 로컬 스토리지 저장
+  //           localStorage.removeItem("accessToken");
+  //           localStorage.setItem(
+  //             "accessToken",
+  //             res.headers.authorization.substr(7)
+  //           ); // Bearer 제거
+  //         }
+  //       })
+  //       .catch((err) => {
+  //         console.log(err);
+  //         alert("refresh 실패.");
+  //         setIsLoggedIn(false);
+  //         window.localStorage.clear();
+  //         navigate("/login");
+  //       });
+  //   }
+  // };
 
   // 리프레쉬 로그아웃 테스트
   // const refreshlogout = () => {
@@ -182,7 +183,7 @@ function Main() {
   // };
 
   // 네비게이터
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   return (
     <div className="Main">
@@ -195,7 +196,7 @@ function Main() {
 
       {isLoggedIn ? (
         <div>
-          <button onClick={handleLogout}>로그아웃</button>
+          <button onClick={logout}>로그아웃</button>
           <div>
             <button onClick={tokeninfo}>토큰정보 확인</button>
             <button onClick={tokenPayload}>토큰 페이로드 확인</button>
