@@ -8,11 +8,13 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom"; //6.6.2
 import Main from "./routes/Main";
 import Login from "./routes/Login";
 import SignUp from "./routes/SignUp";
+import Mylist from "./routes/Mylist";
 
 const router = createBrowserRouter([
   { path: "/", element: <Main /> },
   { path: "/login", element: <Login /> },
   { path: "/signup", element: <SignUp /> },
+  { path: "/mylist", element: <Mylist /> },
 ]);
 
 function App() {
@@ -73,6 +75,7 @@ function App() {
     // 현재 시간이 refresh 토큰 만료시간보다 크면 강제로 로그아웃 수행
     else if (now.getTime() > refreshTokenExp) {
       console.log("refresh토큰 만료. 로그인 재 수행");
+      alert("로그인이 만료되었습니다. 다시 로그인 해 주세요.");
       logout();
     }
     // 조건 3 - 토큰 만료
@@ -102,7 +105,7 @@ function App() {
         })
         .catch((err) => {
           console.log(err);
-          alert("refresh 실패.");
+          alert("로그인이 만료되었습니다. 다시 로그인 해 주세요.");
           setIsLoggedIn(false);
           window.localStorage.clear();
           window.location.replace("/login");

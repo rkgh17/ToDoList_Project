@@ -196,6 +196,11 @@ function Main() {
 
       {isLoggedIn ? (
         <div>
+          <div>
+            <Link to="mylist">
+              <button>리스트로 이동하기</button>
+            </Link>
+          </div>
           <button onClick={logout}>로그아웃</button>
           <div>
             <button onClick={tokeninfo}>토큰정보 확인</button>
