@@ -5,7 +5,7 @@ import axios from "axios";
 
 function SignUp() {
   // 이름, 아이디, 비밀번호
-  const [inputUserName, setUserName] = useState("");
+  const [inputUserNickName, setUserName] = useState("");
   const [inputUserId, setUserId] = useState("");
   const [inputUserPw, setUserPw] = useState("");
   const [inputUserPwCheck, setUserPwCheck] = useState("");
@@ -20,7 +20,7 @@ function SignUp() {
   const handleInputUserId = (e) => {
     setUserId(e.target.value);
   };
-  const handleInputUserName = (e) => {
+  const handleInputUserNickName = (e) => {
     setUserName(e.target.value);
   };
   const handleInputUserPw = (e) => {
@@ -42,13 +42,13 @@ function SignUp() {
   // 회원가입 수행 -> 백으로 전송
   const onClickSignUp = () => {
     console.log("회원가입 수행");
-    // console.log("이름 : ", inputUserName);
+    // console.log("이름 : ", inputUserNickName);
     // console.log("아이디 : ", inputUserId);
     // console.log("비밀번호 : ", inputUserPw);
 
     axios
       .post("/api/signup", {
-        nickname: inputUserName,
+        nickname: inputUserNickName,
         email: inputUserId,
         password: inputUserPw,
       })
@@ -84,18 +84,20 @@ function SignUp() {
             <div>회원가입</div>
 
             <div className="formbox">
-              <label>Name </label>
+              <label>닉네임 </label>
               <input
                 type="name"
-                value={inputUserName}
-                onChange={handleInputUserName}
+                placeholder="닉네임을 입력하세요"
+                value={inputUserNickName}
+                onChange={handleInputUserNickName}
               ></input>
             </div>
 
             <div className="formbox">
-              <label>Email (ID) </label>
+              <label>이메일 (ID) </label>
               <input
                 type="email"
+                placeholder="이메일을 입력하세요"
                 value={inputUserId}
                 onChange={handleInputUserId}
               ></input>
@@ -104,6 +106,7 @@ function SignUp() {
               <label>비밀번호 </label>
               <input
                 type="password"
+                placeholder="비밀번호를 입력하세요"
                 value={inputUserPw}
                 onChange={handleInputUserPw}
                 title="비밀번호"
@@ -114,6 +117,7 @@ function SignUp() {
               <label>비밀번호 확인 </label>
               <input
                 type="password"
+                placeholder="비밀번호를 입력하세요"
                 value={inputUserPwCheck}
                 onChange={handleInputUserPwCheck}
               ></input>

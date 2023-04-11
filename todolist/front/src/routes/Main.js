@@ -217,9 +217,18 @@ function Main() {
           </div> */}
         </div>
       ) : (
-        <Link to="/login">
-          <button className="">로그인</button>
-        </Link>
+        <div>
+          <div>
+            <Link to="/login">
+              <button className="">로그인</button>
+            </Link>
+          </div>
+          <div>
+            <Link to="/signup">
+              <button className="">회원가입</button>
+            </Link>
+          </div>
+        </div>
       )}
     </div>
   );
