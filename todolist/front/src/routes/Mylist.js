@@ -6,7 +6,7 @@ function Mylist() {
   return (
     <div className="Mylist">
       <div>
-        <h2>나만의 일정 조율하기</h2>
+        <h2 style={{ color: "blue" }}>TO DO</h2>
       </div>
       <div>
         <Link to="/">

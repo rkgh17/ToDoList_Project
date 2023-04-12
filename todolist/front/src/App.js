@@ -3,12 +3,20 @@ import "./App.css";
 import { useEffect, useState, useContext } from "react";
 import { AuthContext } from "./context/AuthContext";
 import axios from "axios";
+import { createGlobalStyle } from "styled-components";
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom"; //6.6.2
 import Main from "./routes/Main";
 import Login from "./routes/Login";
 import SignUp from "./routes/SignUp";
 import Mylist from "./routes/Mylist";
+
+// styled-components
+const GlobalStyle = createGlobalStyle`
+  body {
+    background: #e9ecef;
+  }
+`;
 
 const router = createBrowserRouter([
   { path: "/", element: <Main /> },
@@ -96,7 +104,6 @@ function App() {
           .then((res) => {
             // refresh성공
             if (res.status === 204) {
-              console.log("refresh 성공!");
               // console.log(res.headers.authorization);
 
               // 엑세스 토큰 새로고침 - 로컬 스토리지 저장
@@ -105,6 +112,8 @@ function App() {
                 "accessToken",
                 res.headers.authorization.substr(7)
               ); // Bearer 제거
+
+              console.log("refresh 성공!");
             }
           })
           .catch((err) => {
@@ -124,6 +133,7 @@ function App() {
     >
       {" "}
       {/* AuthContext.Provider 추가 */}
+      <GlobalStyle />
       <RouterProvider router={router} />
     </AuthContext.Provider>
   );
