@@ -9,7 +9,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom"; //6.6.2
 import Main from "./routes/Main";
 import Login from "./routes/Login";
 import SignUp from "./routes/SignUp";
-import Mylist from "./routes/Mylist";
+import Mylist from "./routes/Todo/Mylist";
 
 // styled-components
 const GlobalStyle = createGlobalStyle`
