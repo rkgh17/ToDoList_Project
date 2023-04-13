@@ -14,7 +14,7 @@ const AuthContextProvider = ({ children }) => {
   // const login = () => {};
 
   const logout = () => {
-    // console.log("로그아웃");
+    console.log("로그아웃");
   };
 
   const contextValue = {
