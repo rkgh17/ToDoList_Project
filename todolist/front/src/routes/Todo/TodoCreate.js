@@ -3,9 +3,9 @@ import styled, { css } from "styled-components";
 import { MdAdd } from "react-icons/md";
 
 const CircleButton = styled.button`
-  background: #38d9a9;
+  background: #0ac9ff;
   &:hover {
-    background: #63e6be;
+    background: #14d3ff;
   }
   &:active {
     background: #20c997;
@@ -80,12 +80,31 @@ function TodoCreate() {
 
   const onToggle = () => setOpen(!open);
 
+  const [todo, setTodo] = useState();
+
+  const onChangeTodo = (e) => {
+    setTodo(e.target.value);
+    if (e.key === "Enter") {
+      setTodo(e.target.value);
+    }
+  };
+
+  const toDB = () => {
+    console.log("db로가자");
+    alert(todo);
+  };
+
   return (
     <>
       {open && (
         <InsertFormPositioner>
-          <InsertForm>
-            <Input autoFocus placeholder="할 일을 입력 후, Enter 를 누르세요" />
+          <InsertForm onSubmit={toDB}>
+            <Input
+              autoFocus
+              placeholder="할 일을 입력 후, Enter 를 누르세요"
+              value={todo || ""}
+              onChange={onChangeTodo}
+            />
           </InsertForm>
         </InsertFormPositioner>
       )}
