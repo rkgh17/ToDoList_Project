@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styled, { css } from "styled-components";
 import { MdAdd } from "react-icons/md";
+import axios from "axios";
 
 const CircleButton = styled.button`
   background: #0ac9ff;
@@ -92,6 +93,10 @@ function TodoCreate() {
   const toDB = () => {
     console.log("db로가자");
     alert(todo);
+    axios
+      .post("/api/createtodo", {})
+      .then((res) => {})
+      .catch((err) => {});
   };
 
   return (
