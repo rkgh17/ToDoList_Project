@@ -67,6 +67,7 @@ const InsertForm = styled.form`
 `;
 
 const Input = styled.input`
+  margin: 12px;
   padding: 12px;
   border-radius: 4px;
   border: 1px solid #dee2e6;
@@ -76,27 +77,52 @@ const Input = styled.input`
   box-sizing: border-box;
 `;
 
+const Label = styled.label`
+  padding: 15px;
+  font-size: 18px;
+`;
+
 function TodoCreate() {
   const [open, setOpen] = useState(false);
 
-  const onToggle = () => setOpen(!open);
+  const onToggle = () => {
+    setOpen(!open);
+
+    if (deadline === undefined) {
+      setDeadline(today());
+    }
+  };
 
   const [todo, setTodo] = useState();
+  const [deadline, setDeadline] = useState();
 
   const onChangeTodo = (e) => {
     setTodo(e.target.value);
-    if (e.key === "Enter") {
-      setTodo(e.target.value);
-    }
+  };
+  const onChangeDl = (e) => {
+    setDeadline(e.target.value);
   };
 
   const toDB = () => {
     console.log("db로가자");
+    console.log(deadline);
+    console.log(typeof deadline);
     alert(todo);
+    alert(deadline);
+
     axios
       .post("/api/createtodo", {})
       .then((res) => {})
       .catch((err) => {});
+  };
+
+  const today = () => {
+    var date = new Date();
+    var year = date.getFullYear();
+    var month = ("0" + (1 + date.getMonth())).slice(-2);
+    var day = ("0" + date.getDate()).slice(-2);
+
+    return year + "-" + month + "-" + day;
   };
 
   return (
@@ -104,10 +130,17 @@ function TodoCreate() {
       {open && (
         <InsertFormPositioner>
           <InsertForm onSubmit={toDB}>
+            <Label>마감일</Label>
+            <Input
+              type="date"
+              defaultValue={deadline}
+              onChange={onChangeDl}
+              onkeydown="return false"
+            />
             <Input
               autoFocus
               placeholder="할 일을 입력 후, Enter 를 누르세요"
-              value={todo || ""}
+              defaultValue={todo}
               onChange={onChangeTodo}
             />
           </InsertForm>
