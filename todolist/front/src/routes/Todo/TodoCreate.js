@@ -104,14 +104,20 @@ function TodoCreate() {
   };
 
   const toDB = () => {
-    console.log("db로가자");
-    console.log(deadline);
-    console.log(typeof deadline);
-    alert(todo);
-    alert(deadline);
+    // console.log("db로가자");
+    // console.log(deadline);
+    // console.log(typeof deadline);
+    // alert(todo);
+    // alert(deadline);
 
     axios
-      .post("/api/createtodo", {})
+      .post("/api/createtodo", {
+        todo: todo,
+        deadline: deadline,
+        sub: JSON.parse(
+          atob(localStorage.getItem("refreshToken").split(".")[1])
+        ).sub,
+      })
       .then((res) => {})
       .catch((err) => {});
   };
