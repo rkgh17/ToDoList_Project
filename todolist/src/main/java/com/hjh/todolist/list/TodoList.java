@@ -1,6 +1,7 @@
 package com.hjh.todolist.list;
 
 import javax.persistence.Column;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -34,6 +35,9 @@ public class TodoList {
     
     @Column(nullable = false)
     private String todo;
+    
+    @Column(columnDefinition = "boolean default false")
+    private boolean isdone;
     
     @Builder
     public TodoList(Long memberid, String deadline, String startline, String todo) {
