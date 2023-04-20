@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.Map;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -50,5 +51,19 @@ public class TodoController {
 		return null;
 		
 	}
+	
+	@PostMapping("/list")
+	public String list(@RequestBody Map<String, Object> map) {	
+	
+		// 리스트를 찾기 위한 memberid
+		Long memberid = Long.parseLong((String) map.get("sub"));
+		
+		System.out.println("리스트 테스트 - member id : " +  memberid);
+		
+		todoListService.findList(memberid);
+		
+		return null;
+	}
+	
 
 }
