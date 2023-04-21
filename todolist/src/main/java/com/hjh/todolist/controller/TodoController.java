@@ -60,9 +60,9 @@ public class TodoController {
 		
 		System.out.println("리스트 테스트 - member id : " +  memberid);
 		
-		todoListService.findList(memberid);
 		
-		return null;
+		
+		return todoListService.findList(memberid);
 	}
 	
 

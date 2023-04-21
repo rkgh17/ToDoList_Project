@@ -16,6 +16,7 @@ public class TodoListDTO {
 	private String deadline;
 	private String startline;
 	private String todo;
+	private boolean isdone;
 
 	
 	public TodoList toTodoList() {

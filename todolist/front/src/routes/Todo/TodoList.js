@@ -18,7 +18,9 @@ function TodoList() {
           atob(localStorage.getItem("refreshToken").split(".")[1])
         ).sub,
       })
-      .then((res) => {})
+      .then((res) => {
+        console.log(res);
+      })
       .catch((err) => {});
   };
 
