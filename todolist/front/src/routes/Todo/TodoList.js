@@ -20,6 +20,7 @@ function TodoList() {
       })
       .then((res) => {
         console.log(res);
+        // 받은 데이터 표시하고 -> 각자 고유번호 지정
       })
       .catch((err) => {});
   };
