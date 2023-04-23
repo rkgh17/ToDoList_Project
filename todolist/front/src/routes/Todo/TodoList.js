@@ -11,6 +11,7 @@ const TodoListBlock = styled.div`
 `;
 
 function TodoList() {
+  // Back과 통신하여 refreshToken속 id를 보내어 id별 todo들을 가져옴
   const listtest = () => {
     axios
       .post("/api/list", {
@@ -20,14 +21,14 @@ function TodoList() {
       })
       .then((res) => {
         console.log(res);
-        // 받은 데이터 표시하고 -> 각자 고유번호 지정
+        // 받은 데이터 표시하고 -> 각자 고유번호 지정?
       })
       .catch((err) => {});
   };
 
   return (
     <TodoListBlock>
-      <TodoItem text="유림이랑 뽑보하기" done={true} />
+      <TodoItem text="A" done={true} />
       <TodoItem text="컴포넌트 스타일링 하기" done={true} />
       <TodoItem text="Context 만들기" done={false} />
       <TodoItem text="기능 구현하기" done={false} />
