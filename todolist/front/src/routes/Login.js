@@ -75,7 +75,7 @@ function Login() {
       .catch((err) => {
         console.log(err);
 
-        if (err.status == 401) {
+        if (err.status === 401) {
           alert("등록되지 않은 아이디 입니다.");
         } else {
           alert("로그인 중 오류가 발생하였습니다.");
