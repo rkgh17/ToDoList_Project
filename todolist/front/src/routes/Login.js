@@ -39,9 +39,9 @@ function Login() {
     // 폼 제출 이벤트 취소
     e.preventDefault();
 
-    console.log("로그인 수행");
-    console.log("아이디 : ", inputId);
-    console.log("비밀번호 : ", inputPw);
+    // console.log("로그인 수행");
+    // console.log("아이디 : ", inputId);
+    // console.log("비밀번호 : ", inputPw);
 
     axios
       .post("/api/login", {
@@ -74,7 +74,12 @@ function Login() {
       })
       .catch((err) => {
         console.log(err);
-        alert("로그인 중 오류가 발생하였습니다.");
+
+        if (err.status == 401) {
+          alert("등록되지 않은 아이디 입니다.");
+        } else {
+          alert("로그인 중 오류가 발생하였습니다.");
+        }
       });
   };
 
