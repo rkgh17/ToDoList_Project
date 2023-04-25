@@ -1,5 +1,5 @@
 import React from "react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import TodoItem from "./TodoItem";
 import axios from "axios";
@@ -15,12 +15,29 @@ function TodoList() {
   // 받은 데이터 관리
   const [todos, setTodos] = useState([]);
 
+  useEffect(() => {
+    axios
+      .post("/api/list", {
+        sub: JSON.parse(
+          atob(localStorage.getItem("refreshToken").split(".")[1])
+        ).sub,
+      })
+      .then((res) => {
+        console.log(res);
+        // 받은 데이터 표시하고 -> 각자 고유번호 지정?
+        setTodos(res.data);
+        // console.log(typeof todos); //object - 각각의 배열 안에 키 - 값
+        // console.log(todos[0].listid);
+      })
+      .catch((err) => {});
+  }, []);
+
   const todoList = todos.map((todo) => (
     <TodoItem key={todo.listid} text={todo.todo} done={todo.isdone} />
   ));
 
-  // Back과 통신하여 refreshToken속 id를 보내어 id별 todo들을 가져옴
   const listtest = () => {
+    // Back과 통신하여 refreshToken속 id를 보내어 id별 todo들을 가져옴
     axios
       .post("/api/list", {
         sub: JSON.parse(
@@ -42,7 +59,7 @@ function TodoList() {
       {/* <TodoItem text={todos[0].todo} done={todos[0].isdone} /> */}
       {todoList}
 
-      <button onClick={listtest}>테스트</button>
+      {/* <button onClick={listtest}>테스트</button> */}
     </TodoListBlock>
   );
 }

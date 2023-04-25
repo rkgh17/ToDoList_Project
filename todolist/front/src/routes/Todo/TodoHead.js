@@ -60,7 +60,7 @@ function TodoHead() {
         {today.getFullYear()}년 {today.getMonth() + 1}월 {today.getDate()}일
       </h1>
       <div className="day">{week(today.getDay())}</div>
-      <div className="tasks-left">할 일 2개 남음</div>
+      <div className="tasks-left">해야 할 일</div>
     </TodoHeadBlock>
   );
 }
