@@ -124,6 +124,9 @@ function App() {
             window.location.replace("/login");
           });
       }
+    } else {
+      // 메인 조건문2 : 로그아웃 상태
+      window.location.replace("/login");
     }
   };
 

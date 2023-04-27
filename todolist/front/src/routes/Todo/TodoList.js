@@ -16,20 +16,24 @@ function TodoList() {
   const [todos, setTodos] = useState([]);
 
   useEffect(() => {
-    axios
-      .post("/api/list", {
-        sub: JSON.parse(
-          atob(localStorage.getItem("refreshToken").split(".")[1])
-        ).sub,
-      })
-      .then((res) => {
-        console.log(res);
-        // 받은 데이터 표시하고 -> 각자 고유번호 지정?
-        setTodos(res.data);
-        // console.log(typeof todos); //object - 각각의 배열 안에 키 - 값
-        // console.log(todos[0].listid);
-      })
-      .catch((err) => {});
+    if (!localStorage.getItem("refreshToken")) {
+      console.log("로그인 필요");
+    } else {
+      axios
+        .post("/api/list", {
+          sub: JSON.parse(
+            atob(localStorage.getItem("refreshToken").split(".")[1])
+          ).sub,
+        })
+        .then((res) => {
+          console.log(res);
+          // 받은 데이터 표시하고 -> 각자 고유번호 지정?
+          setTodos(res.data);
+          // console.log(typeof todos); //object - 각각의 배열 안에 키 - 값
+          // console.log(todos[0].listid);
+        })
+        .catch((err) => {});
+    }
   }, []);
 
   const todoList = todos.map((todo) => (
