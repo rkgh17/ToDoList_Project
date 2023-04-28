@@ -12,9 +12,10 @@ const TodoListBlock = styled.div`
 `;
 
 function TodoList() {
-  // 받은 데이터 관리
+  // 데이터 관리
   const [todos, setTodos] = useState([]);
 
+  // 맵 로딩시 백으로부터 각자 고유id로 할일을 찾는 쿼리 전송
   useEffect(() => {
     if (!localStorage.getItem("refreshToken")) {
       console.log("로그인 필요");
@@ -37,7 +38,12 @@ function TodoList() {
   }, []);
 
   const todoList = todos.map((todo) => (
-    <TodoItem key={todo.listid} text={todo.todo} done={todo.isdone} />
+    <TodoItem
+      key={todo.listid}
+      id={todo.listid}
+      text={todo.todo}
+      done={todo.isdone}
+    />
   ));
 
   const listtest = () => {
