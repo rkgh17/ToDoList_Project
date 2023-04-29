@@ -56,7 +56,7 @@ function TodoList() {
       })
       .then((res) => {
         console.log(res);
-        // 받은 데이터 표시하고 -> 각자 고유번호 지정?
+        // 받은 데이터 표시
         setTodos(res.data);
         // console.log(typeof todos); //object - 각각의 배열 안에 키 - 값
         // console.log(todos[0].listid);
