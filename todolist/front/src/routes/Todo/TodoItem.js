@@ -59,6 +59,7 @@ const Text = styled.div`
 
 function TodoItem({ id, done, text }) {
   const onToggle = () => {
+    done === false ? (done = !done) : (done = !done);
     console.log(done);
   };
   return (
