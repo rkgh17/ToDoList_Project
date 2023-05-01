@@ -15,6 +15,16 @@ function TodoList() {
   // 데이터 관리
   const [todos, setTodos] = useState([]);
 
+  // 체크박스
+  const checkDone = () => {
+    console.log("props 전달 완료");
+    // this.setTodos(
+    //   this.isdone === false
+    //     ? (this.isdone = !this.isdone)
+    //     : (this.isdone = !this.isdone)
+    // );
+  };
+
   // 맵 로딩시 백으로부터 각자 고유id로 할일을 찾는 쿼리 전송
   useEffect(() => {
     if (!localStorage.getItem("refreshToken")) {
@@ -33,7 +43,9 @@ function TodoList() {
           // console.log(typeof todos); //object - 각각의 배열 안에 키 - 값
           // console.log(todos[0].listid);
         })
-        .catch((err) => {});
+        .catch((err) => {
+          console.log("Todo List Error");
+        });
     }
   }, []);
 
@@ -43,6 +55,7 @@ function TodoList() {
       id={todo.listid}
       text={todo.todo}
       done={todo.isdone}
+      checkDone={checkDone}
     />
   ));
 
