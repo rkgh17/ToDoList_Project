@@ -57,10 +57,10 @@ const Text = styled.div`
     `}
 `;
 
-function TodoItem({ id, done, text, checkDone }) {
+function TodoItem({ id, done, text, updateTodo }) {
   const onToggle = () => {
     // done === false ? (done = !done) : (done = !done);
-    checkDone();
+    updateTodo(id, !done);
     console.log("클릭한 todo의 id는 " + id);
   };
   return (

@@ -12,17 +12,23 @@ const TodoListBlock = styled.div`
 `;
 
 function TodoList() {
-  // 데이터 관리
+  // 데이터 관리 - object들로 이루어진 배열
   const [todos, setTodos] = useState([]);
 
-  // 체크박스
-  const checkDone = () => {
+  // 할일 완료
+  const updateTodo = (id, isdone) => {
     console.log("props 전달 완료");
-    // this.setTodos(
-    //   this.isdone === false
-    //     ? (this.isdone = !this.isdone)
-    //     : (this.isdone = !this.isdone)
-    // );
+    setTodos((prevTodos) =>
+      prevTodos.map((todo) => {
+        if (todo.listid === id) {
+          return {
+            ...todo,
+            isdone,
+          };
+        }
+        return todo;
+      })
+    );
   };
 
   // 맵 로딩시 백으로부터 각자 고유id로 할일을 찾는 쿼리 전송
@@ -55,7 +61,7 @@ function TodoList() {
       id={todo.listid}
       text={todo.todo}
       done={todo.isdone}
-      checkDone={checkDone}
+      updateTodo={updateTodo}
     />
   ));
 
