@@ -27,7 +27,7 @@ public class TodoController {
 	@PostMapping("/createtodo")
 	public ResponseEntity<Void> createTodo(@RequestBody Map<String, Object> map){
 		
-		System.out.println(map);
+//		System.out.println(map);
 		
 		String pattern = "yyyy-MM-dd";
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
@@ -52,13 +52,21 @@ public class TodoController {
 		
 	}
 	
+	// 
+	@PostMapping("donetodo")
+	public ResponseEntity<Void> doneTodo(@RequestBody Map<String, Object> map){
+		System.out.println(map);
+		return null;
+	}
+	
+	// 화면에 TodoList를 띄워주기 위해 select쿼리를 수행하여 보내줌
 	@PostMapping("/list")
 	public String list(@RequestBody Map<String, Object> map) {	
 	
 		// 리스트를 찾기 위한 memberid
 		Long memberid = Long.parseLong((String) map.get("sub"));
 		
-		System.out.println("리스트 테스트 - member id : " +  memberid);
+//		System.out.println("리스트 테스트 - member id : " +  memberid);
 		
 		
 		

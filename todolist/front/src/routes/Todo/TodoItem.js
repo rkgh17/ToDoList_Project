@@ -1,6 +1,7 @@
 import React from "react";
 import styled, { css } from "styled-components";
 import { MdDone, MdDelete } from "react-icons/md";
+import axios from "axios";
 
 const Remove = styled.div`
   display: flex;
@@ -58,10 +59,27 @@ const Text = styled.div`
 `;
 
 function TodoItem({ id, done, text, updateTodo }) {
+  // 할일 토글
   const onToggle = () => {
-    // done === false ? (done = !done) : (done = !done);
-    updateTodo(id, !done);
-    console.log("클릭한 todo의 id는 " + id);
+    // console.log("클릭한 todo의 id는 " + id);
+    if (!done) {
+      updateTodo(id, !done);
+
+      // 할일 미완료 상태에서 클릭 시
+      axios
+        .post("/api/donetodo", {
+          listid: id,
+        })
+        .then((res) => {
+          console.log("투두 체크 완료");
+        })
+        .catch((err) => {});
+    } else {
+      if (window.confirm("정말 취소하시겠습니까?")) {
+        updateTodo(id, !done);
+      } else {
+      }
+    }
   };
   return (
     <TodoItemBlock>

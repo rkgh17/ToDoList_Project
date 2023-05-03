@@ -39,6 +39,9 @@ public class TodoList {
     @Column(columnDefinition = "boolean default false")
     private boolean isdone;
     
+    @Column(nullable = true)
+    private String finishdate;
+    
     @Builder
     public TodoList(Long memberid, String deadline, String startline, String todo) {
     	this.memberid = memberid;

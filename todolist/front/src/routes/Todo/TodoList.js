@@ -15,9 +15,9 @@ function TodoList() {
   // 데이터 관리 - object들로 이루어진 배열
   const [todos, setTodos] = useState([]);
 
-  // 할일 완료
+  // 할일 토글
   const updateTodo = (id, isdone) => {
-    console.log("props 전달 완료");
+    // console.log("props 전달 완료");
     setTodos((prevTodos) =>
       prevTodos.map((todo) => {
         if (todo.listid === id) {
