@@ -52,13 +52,6 @@ public class TodoController {
 		
 	}
 	
-	// 
-	@PostMapping("donetodo")
-	public ResponseEntity<Void> doneTodo(@RequestBody Map<String, Object> map){
-		System.out.println(map);
-		return null;
-	}
-	
 	// 화면에 TodoList를 띄워주기 위해 select쿼리를 수행하여 보내줌
 	@PostMapping("/list")
 	public String list(@RequestBody Map<String, Object> map) {	
@@ -71,6 +64,13 @@ public class TodoController {
 		
 		
 		return todoListService.findList(memberid);
+	}
+	
+	// TodoList 완료와 취소
+	@PostMapping("donetodo")
+	public ResponseEntity<Void> doneTodo(@RequestBody Map<String, Object> map){
+		System.out.println(map);
+		return null;
 	}
 	
 

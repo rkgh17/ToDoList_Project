@@ -63,20 +63,29 @@ function TodoItem({ id, done, text, updateTodo }) {
   const onToggle = () => {
     // console.log("클릭한 todo의 id는 " + id);
     if (!done) {
+      // 할일 완료
       updateTodo(id, !done);
 
-      // 할일 미완료 상태에서 클릭 시
       axios
         .post("/api/donetodo", {
           listid: id,
+          state: done,
         })
         .then((res) => {
-          console.log("투두 체크 완료");
+          // console.log("투두 체크 완료");
         })
         .catch((err) => {});
     } else {
+      // 할일 완료 취소
       if (window.confirm("정말 취소하시겠습니까?")) {
         updateTodo(id, !done);
+        axios
+          .post("/api/donetodo", {
+            listid: id,
+            state: done,
+          })
+          .then((res) => {})
+          .catch((err) => {});
       } else {
       }
     }
