@@ -69,7 +69,19 @@ public class TodoController {
 	// TodoList 완료와 취소
 	@PostMapping("donetodo")
 	public ResponseEntity<Void> doneTodo(@RequestBody Map<String, Object> map){
-		System.out.println(map);
+//		System.out.println(map);
+		
+//		bool타입
+//		System.out.println(map.get("state").getClass());
+		
+		// 전달받은 state값에 따라 TODO 저장과 취소
+		if((boolean) map.get("state")) {
+			
+//			System.out.println("현상태 true");
+		}else {
+			
+		}
+		
 		return null;
 	}
 	

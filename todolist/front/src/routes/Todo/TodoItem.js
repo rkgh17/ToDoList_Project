@@ -64,7 +64,7 @@ function TodoItem({ id, done, text, updateTodo }) {
     // console.log("클릭한 todo의 id는 " + id);
     if (!done) {
       // 할일 완료
-      updateTodo(id, !done);
+      // updateTodo(id, !done);
 
       axios
         .post("/api/donetodo", {
@@ -73,18 +73,28 @@ function TodoItem({ id, done, text, updateTodo }) {
         })
         .then((res) => {
           // console.log("투두 체크 완료");
+          // console.log(res.status);
+
+          // 서버와 통신 완료
+          if (res.status === 200) {
+            updateTodo(id, !done);
+          }
         })
         .catch((err) => {});
     } else {
       // 할일 완료 취소
       if (window.confirm("정말 취소하시겠습니까?")) {
-        updateTodo(id, !done);
+        // updateTodo(id, !done);
         axios
           .post("/api/donetodo", {
             listid: id,
             state: done,
           })
-          .then((res) => {})
+          .then((res) => {
+            if (res.status === 200) {
+              updateTodo(id, !done);
+            }
+          })
           .catch((err) => {});
       } else {
       }
