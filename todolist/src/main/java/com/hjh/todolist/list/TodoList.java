@@ -7,6 +7,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import org.hibernate.annotations.DynamicUpdate;
+
 import com.hjh.todolist.member.Member;
 import com.hjh.todolist.member.RoleType;
 
@@ -18,6 +20,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @Builder
+@DynamicUpdate
 public class TodoList {
 	
     @Id

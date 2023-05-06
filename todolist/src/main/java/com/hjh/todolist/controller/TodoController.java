@@ -73,14 +73,11 @@ public class TodoController {
 		
 //		bool타입
 //		System.out.println(map.get("state").getClass());
+//		System.out.println(map.get("listid").getClass());
 		
-		// 전달받은 state값에 따라 TODO 저장과 취소
-		if((boolean) map.get("state")) {
-			
-//			System.out.println("현상태 true");
-		}else {
-			
-		}
+		// 전달받은 state값에 따라 TODO 저장과 취소		
+		todoListService.updateList(!(boolean) map.get("state"), Long.valueOf(map.get("listid").toString()));
+		
 		
 		return null;
 	}

@@ -91,6 +91,7 @@ function TodoItem({ id, done, text, updateTodo }) {
             state: done,
           })
           .then((res) => {
+            // 서버와 통신 완료
             if (res.status === 200) {
               updateTodo(id, !done);
             }

@@ -5,9 +5,11 @@ import org.json.simple.JSONObject;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import com.hjh.todolist.list.TodoList;
 import com.hjh.todolist.list.TodoListDTO;
+import com.hjh.todolist.list.TodoListDTO.TodoListDTOBuilder;
 import com.hjh.todolist.list.TodoListRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -30,7 +32,7 @@ public class TodoListService {
 	// 데이터를 찾고, json으로 변환
 	public String findList(Long memberid) {
 		
-		System.out.println("id로 데이터찾기 test");
+//		System.out.println("id로 데이터찾기 test");
 		
 		List<TodoList> todolist = todoListRepository.findAllByMemberid(memberid);
 		
@@ -50,6 +52,16 @@ public class TodoListService {
 //		System.out.println(todolist.get(1).getTodo());
 		
 		return jsonArray.toJSONString();
+	}
+	
+	// TODO 완료체크 - 취소
+	public Long updateList(boolean state, Long listId) {
+		
+		todoListRepository.updateList(state, listId);
+//		System.out.println("DB Update 완료");
+		
+		return null;
+		
 	}
 
 }
