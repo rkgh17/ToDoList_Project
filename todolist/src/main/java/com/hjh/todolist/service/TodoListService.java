@@ -34,7 +34,8 @@ public class TodoListService {
 		
 //		System.out.println("id로 데이터찾기 test");
 		
-		List<TodoList> todolist = todoListRepository.findAllByMemberid(memberid);
+//		List<TodoList> todolist = todoListRepository.findAllByMemberid(memberid);
+		List<TodoList> todolist = todoListRepository.AllList(memberid);
 		
 		JSONArray jsonArray = new JSONArray();
 		
