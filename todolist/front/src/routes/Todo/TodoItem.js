@@ -101,13 +101,19 @@ function TodoItem({ id, done, text, updateTodo }) {
       }
     }
   };
+
+  // 할일 삭제
+  const onDelete = () => {
+    console.log("삭제처리 예정");
+  };
+
   return (
     <TodoItemBlock>
       <CheckCircle done={done} onClick={onToggle}>
         {done && <MdDone />}
       </CheckCircle>
       <Text done={done}>{text}</Text>
-      <Remove>
+      <Remove onClick={onDelete}>
         <MdDelete />
       </Remove>
     </TodoItemBlock>
