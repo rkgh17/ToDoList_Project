@@ -82,5 +82,14 @@ public class TodoController {
 		return null;
 	}
 	
+	// TodoList 삭제
+	@PostMapping("deltodo")
+	public ResponseEntity<Void> delTodo(@RequestBody Map<String, Object> map){
+		
+		// 전달받은 todoid와 일치하는 데이터를 삭제
+		todoListService.deleteList(Long.valueOf(map.get("listid").toString()));
+		
+		return null;
+	}
 
 }

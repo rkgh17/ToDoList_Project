@@ -55,7 +55,7 @@ public class TodoListService {
 		return jsonArray.toJSONString();
 	}
 	
-	// TODO 완료체크 - 취소
+	// TodoList 완료체크 - 취소
 	public Long updateList(boolean state, Long listId) {
 		
 		todoListRepository.updateList(state, listId);
@@ -63,6 +63,14 @@ public class TodoListService {
 		
 		return null;
 		
+	}
+	
+	// TodoList 삭제
+	public Long deleteList(Long listId) {
+		
+		todoListRepository.deleteById(listId);
+		
+		return null;
 	}
 
 }

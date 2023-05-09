@@ -80,7 +80,9 @@ function TodoItem({ id, done, text, updateTodo }) {
             updateTodo(id, !done);
           }
         })
-        .catch((err) => {});
+        .catch((err) => {
+          console.log("체크 에러");
+        });
     } else {
       // 할일 완료 취소
       if (window.confirm("정말 취소하시겠습니까?")) {
@@ -96,7 +98,9 @@ function TodoItem({ id, done, text, updateTodo }) {
               updateTodo(id, !done);
             }
           })
-          .catch((err) => {});
+          .catch((err) => {
+            console.log("취소 에러");
+          });
       } else {
       }
     }
@@ -104,7 +108,21 @@ function TodoItem({ id, done, text, updateTodo }) {
 
   // 할일 삭제
   const onDelete = () => {
-    console.log("삭제처리 예정");
+    // console.log("삭제처리 예정");
+
+    axios
+      .post("/api/deltodo", {
+        listid: id,
+      })
+      .then((res) => {
+        if (res.status === 200) {
+          alert("삭제 완료");
+          window.location.reload();
+        }
+      })
+      .catch((err) => {
+        console.log("삭제 에러");
+      });
   };
 
   return (
