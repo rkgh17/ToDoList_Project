@@ -41,7 +41,7 @@ function SignUp() {
 
   // 회원가입 수행 -> 백으로 전송
   const onClickSignUp = () => {
-    console.log("회원가입 수행");
+    // console.log("회원가입 수행");
     // console.log("이름 : ", inputUserNickName);
     // console.log("아이디 : ", inputUserId);
     // console.log("비밀번호 : ", inputUserPw);

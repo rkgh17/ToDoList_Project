@@ -43,14 +43,14 @@ function TodoList() {
           ).sub,
         })
         .then((res) => {
-          console.log(res);
+          // console.log(res);
           // 받은 데이터 표시하고 -> 각자 고유번호 지정?
           setTodos(res.data);
           // console.log(typeof todos); //object - 각각의 배열 안에 키 - 값
           // console.log(todos[0].listid);
         })
         .catch((err) => {
-          console.log("Todo List Error");
+          // console.log("Todo List Error");
         });
     }
   }, []);

@@ -49,7 +49,7 @@ function Login() {
         password: inputPw,
       })
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         // console.log("res.data.userId :: ", res.data.userId);
         // console.log("res.data.msg :: ", res.data.msg);
         // console.log(res.data.accessToken);
@@ -73,7 +73,7 @@ function Login() {
         }
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
 
         if (err.status === 401) {
           alert("등록되지 않은 아이디 입니다.");

@@ -46,19 +46,19 @@ function App() {
         },
       })
       .then((res) => {
-        console.log(res);
+        // console.log(res);
 
         if (res.status === 200) {
           setIsLoggedIn(false);
           window.localStorage.clear();
-          console.log("로그아웃 - 200");
+          // console.log("로그아웃 - 200");
         }
       })
       .catch((err) => {
         // 로그아웃 수행
         setIsLoggedIn(false);
         window.localStorage.clear();
-        console.log("로그아웃?");
+        // console.log("로그아웃?");
       });
   };
 
@@ -81,12 +81,12 @@ function App() {
         // new Date() > new Date(localStorage.getItem("accessTokenExpiresIn") * 1)
         now.getTime() < tokenExp
       ) {
-        console.log("토큰 유효");
+        // console.log("토큰 유효");
       }
       // 조건 2 - refresh 토큰 체크
       // 현재 시간이 refresh 토큰 만료시간보다 크면 강제로 로그아웃 수행
       else if (now.getTime() > refreshTokenExp) {
-        console.log("refresh토큰 만료. 로그인 재 수행");
+        // console.log("refresh토큰 만료. 로그인 재 수행");
         alert("로그인이 만료되었습니다. 다시 로그인 해 주세요.");
         logout();
       }
@@ -113,11 +113,11 @@ function App() {
                 res.headers.authorization.substr(7)
               ); // Bearer 제거
 
-              console.log("refresh 성공!");
+              // console.log("refresh 성공!");
             }
           })
           .catch((err) => {
-            console.log(err);
+            // console.log(err);
             alert("로그인이 만료되었습니다. 다시 로그인 해 주세요.");
             setIsLoggedIn(false);
             window.localStorage.clear();
