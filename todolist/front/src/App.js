@@ -62,7 +62,7 @@ function App() {
       });
   };
 
-  // refresh 로직
+  // refresh 로직 + 로그인 유무
   const refresh = () => {
     // 메인 조건문 - 로그인 되어있는가.
     if (localStorage.getItem("isLoggedIn") === "true") {
@@ -93,7 +93,7 @@ function App() {
       // 조건 3 - 토큰 만료
       // 토큰이 만료되었으므로, 백엔드와 통신하여 새 엑세스 토큰 발급
       else {
-        console.log("토큰 만료");
+        // console.log("토큰 만료");
         axios
           .get("/api/refresh", {
             headers: {

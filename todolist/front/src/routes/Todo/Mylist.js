@@ -17,7 +17,7 @@ function Mylist() {
   useEffect(() => {
     // 페이지 로드 시 토큰 만료시간 검사.
     refresh();
-  }, []);
+  }, [refresh]);
 
   return (
     // <div className="Mylist">

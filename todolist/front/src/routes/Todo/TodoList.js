@@ -46,6 +46,7 @@ function TodoList() {
           // console.log(res);
           // 받은 데이터 표시하고 -> 각자 고유번호 지정?
           setTodos(res.data);
+          // console.log(todos);
           // console.log(typeof todos); //object - 각각의 배열 안에 키 - 값
           // console.log(todos[0].listid);
         })
@@ -65,29 +66,11 @@ function TodoList() {
     />
   ));
 
-  const listtest = () => {
-    // Back과 통신하여 refreshToken속 id를 보내어 id별 todo들을 가져옴
-    axios
-      .post("/api/list", {
-        sub: JSON.parse(
-          atob(localStorage.getItem("refreshToken").split(".")[1])
-        ).sub,
-      })
-      .then((res) => {
-        console.log(res);
-        // 받은 데이터 표시
-        setTodos(res.data);
-        // console.log(typeof todos); //object - 각각의 배열 안에 키 - 값
-        // console.log(todos[0].listid);
-      })
-      .catch((err) => {});
-  };
-
   return (
     <TodoListBlock>
       {/* <TodoItem text={todos[0].todo} done={todos[0].isdone} /> */}
+      {/* {todos.length === 0 ? <div>할 일을 입력해주세요.</div> : { todoList }} */}
       {todoList}
-
       {/* <button onClick={listtest}>테스트</button> */}
     </TodoListBlock>
   );
