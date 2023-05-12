@@ -68,6 +68,7 @@ function TodoList() {
 
   return (
     <TodoListBlock>
+      {/* 할일이 없을 때, 표시해줌 */}
       {/* <TodoItem text={todos[0].todo} done={todos[0].isdone} /> */}
       {/* {todos.length === 0 ? <div>할 일을 입력해주세요.</div> : { todoList }} */}
       {todoList}
