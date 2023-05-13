@@ -202,7 +202,7 @@ function Main() {
             </Link>
           </div>
           <button onClick={logout}>로그아웃</button>
-          <div>
+          {/* <div>
             <button onClick={tokeninfo}>토큰정보 확인</button>
             <button onClick={tokenPayload}>토큰 페이로드 확인</button>
           </div>
@@ -211,7 +211,7 @@ function Main() {
           </div>
           <div>
             <button onClick={refresh}>refresh테스트</button>
-          </div>
+          </div> */}
           {/* <div>
             <button onClick={refreshlogout}>리프레쉬 로그아웃 테스트</button>
           </div> */}

@@ -3,20 +3,12 @@ import "./App.css";
 import { useEffect, useState, useContext } from "react";
 import { AuthContext } from "./context/AuthContext";
 import axios from "axios";
-import { createGlobalStyle } from "styled-components";
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom"; //6.6.2
 import Main from "./routes/Main";
 import Login from "./routes/Login";
 import SignUp from "./routes/SignUp";
 import Mylist from "./routes/Todo/Mylist";
-
-// styled-components
-const GlobalStyle = createGlobalStyle`
-  body {
-    background: #e9ecef;
-  }
-`;
 
 const router = createBrowserRouter([
   { path: "/", element: <Main /> },
@@ -136,7 +128,6 @@ function App() {
     >
       {" "}
       {/* AuthContext.Provider 추가 */}
-      <GlobalStyle />
       <RouterProvider router={router} />
     </AuthContext.Provider>
   );

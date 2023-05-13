@@ -11,6 +11,13 @@ import TodoHead from "./TodoHead";
 import TodoList from "./TodoList";
 import TodoCreate from "./TodoCreate";
 
+// styled-components
+const GlobalStyle = createGlobalStyle`
+  body {
+    background: #e9ecef;
+  }
+`;
+
 function Mylist() {
   const { refresh, logout } = useContext(AuthContext);
 
@@ -20,13 +27,15 @@ function Mylist() {
   }, [refresh]);
 
   return (
-    // <div className="Mylist">
-    <TodoTemplate>
-      <TodoHead />
-      <TodoList />
-      <TodoCreate />
-    </TodoTemplate>
-    // </div>
+    <div>
+      <GlobalStyle />
+      <TodoTemplate>
+        <TodoHead />
+        <TodoList />
+        <TodoCreate />
+      </TodoTemplate>
+      //{" "}
+    </div>
   );
 }
 
