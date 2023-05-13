@@ -35,6 +35,7 @@ function TodoList() {
   useEffect(() => {
     if (!localStorage.getItem("refreshToken")) {
       console.log("로그인 필요");
+      window.location.replace("/login");
     } else {
       axios
         .post("/api/list", {

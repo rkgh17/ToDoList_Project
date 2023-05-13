@@ -118,7 +118,10 @@ function App() {
       }
     } else {
       // 메인 조건문2 : 로그아웃 상태
-      window.location.replace("/login");
+      // console.log(window.location.host);
+      if (window.location.host != "localhost:3000") {
+        window.location.replace("/login");
+      }
     }
   };
 

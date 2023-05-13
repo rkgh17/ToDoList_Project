@@ -188,21 +188,21 @@ function Main() {
   return (
     <div className="Main">
       <header className="Header_main">
-        <h2 style={{ color: "blue" }}>
+        <h2 style={{ color: "#2392eb" }}>
           <FcTodoList size="180" /> <br />
-          To - Do - List
+          My List
         </h2>
       </header>
-
-      {isLoggedIn ? (
-        <div>
+      <div className="mainBody">
+        {isLoggedIn ? (
           <div>
-            <Link to="mylist">
-              <button>리스트로 이동하기</button>
-            </Link>
-          </div>
-          <button onClick={logout}>로그아웃</button>
-          {/* <div>
+            <div>
+              <Link to="mylist">
+                <button>리스트로 이동하기</button>
+              </Link>
+            </div>
+            <button onClick={logout}>로그아웃</button>
+            {/* <div>
             <button onClick={tokeninfo}>토큰정보 확인</button>
             <button onClick={tokenPayload}>토큰 페이로드 확인</button>
           </div>
@@ -212,24 +212,25 @@ function Main() {
           <div>
             <button onClick={refresh}>refresh테스트</button>
           </div> */}
-          {/* <div>
+            {/* <div>
             <button onClick={refreshlogout}>리프레쉬 로그아웃 테스트</button>
           </div> */}
-        </div>
-      ) : (
-        <div>
-          <div>
-            <Link to="/login">
-              <button className="">로그인</button>
-            </Link>
           </div>
+        ) : (
           <div>
-            <Link to="/signup">
-              <button className="">회원가입</button>
-            </Link>
+            <div>
+              <Link to="/login">
+                <button className="">로그인</button>
+              </Link>
+            </div>
+            <div>
+              <Link to="/signup">
+                <button className="">회원가입</button>
+              </Link>
+            </div>
           </div>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 }
