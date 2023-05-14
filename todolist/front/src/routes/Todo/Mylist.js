@@ -34,7 +34,6 @@ function Mylist() {
         <TodoList />
         <TodoCreate />
       </TodoTemplate>
-      //{" "}
     </div>
   );
 }

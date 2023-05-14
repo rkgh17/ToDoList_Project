@@ -193,15 +193,19 @@ function Main() {
           My List
         </h2>
       </header>
-      <div className="mainBody">
+      <div className="Body_main">
         {isLoggedIn ? (
           <div>
             <div>
               <Link to="mylist">
-                <button>리스트로 이동하기</button>
+                <button className="Main_Button" type="button">
+                  리스트로 이동하기
+                </button>
               </Link>
             </div>
-            <button onClick={logout}>로그아웃</button>
+            <button className="Main_Button" onClick={logout}>
+              로그아웃
+            </button>
             {/* <div>
             <button onClick={tokeninfo}>토큰정보 확인</button>
             <button onClick={tokenPayload}>토큰 페이로드 확인</button>
@@ -220,12 +224,12 @@ function Main() {
           <div>
             <div>
               <Link to="/login">
-                <button className="">로그인</button>
+                <button className="Main_Button">로그인</button>
               </Link>
             </div>
             <div>
               <Link to="/signup">
-                <button className="">회원가입</button>
+                <button className="Main_Button">회원가입</button>
               </Link>
             </div>
           </div>
