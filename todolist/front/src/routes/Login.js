@@ -4,6 +4,7 @@ import { AiOutlineMail } from "react-icons/ai";
 import { RiLockPasswordLine } from "react-icons/ri";
 import { AuthContext } from "../context/AuthContext";
 import axios from "axios";
+import "./Routes.css";
 
 function Login() {
   // 로그인 상태관리
@@ -94,8 +95,8 @@ function Login() {
       <header className="Header">
         <div>로그인</div>
         <form onSubmit={onSubmitLogin}>
-          <div>
-            <div>
+          <div className="input_box_wrapper">
+            <div className="input_box">
               <AiOutlineMail />
               <input
                 type="id"
@@ -107,7 +108,7 @@ function Login() {
               />
             </div>
 
-            <div>
+            <div className="input_box">
               <RiLockPasswordLine />
               <input
                 type="password"
@@ -119,16 +120,15 @@ function Login() {
               />
             </div>
           </div>
-
+        </form>
+        <div>
           <div>
-            <button type="submit" className="">
+            <button type="submit" className="Main_Button">
               로그인
             </button>
           </div>
-        </form>
-        <div>
           <Link to="/signup">
-            <button className="">회원가입</button>
+            <button className="Main_Button">회원가입</button>
           </Link>
         </div>
       </header>

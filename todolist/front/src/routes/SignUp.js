@@ -132,7 +132,7 @@ function SignUp() {
           <div>
             <button
               type="submit"
-              className=""
+              className="Main_Button"
               onClick={onClickSignUp}
               disabled={!isPasswordConfirm}
             >

@@ -189,8 +189,7 @@ function Main() {
     <div className="Main">
       <header className="Header_main">
         <h2 style={{ color: "#2392eb" }}>
-          <FcTodoList size="180" /> <br />
-          My List
+          <FcTodoList size="200" /> <br />
         </h2>
       </header>
       <div className="Body_main">

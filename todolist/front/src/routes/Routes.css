@@ -9,7 +9,7 @@
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
-  line-height: 500%; /*줄간격*/
+  line-height: 300%; /*줄간격*/
 }
 
 .Header {
@@ -57,8 +57,8 @@
   border-radius: 8px;
   font-size: 1.2rem;
   border: none;
-  color: black;
-  background-color: lightgray;
+  color: #2392eb;
+  background-color: white;
   padding: 10px 15px;
   text-align: center;
   text-decoration: none;
@@ -66,9 +66,24 @@
   width: 100%;
   transition-duration: 0.4s;
   cursor: pointer;
+  font-weight: bold;
 }
 
 .Main_Button:hover {
-  background-color: #90caf9; /* Green */
+  background-color: #90caf9;
   color: white;
+}
+
+.input_box_wrapper {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  height: auto;
+}
+
+.input_box {
+  display: flex;
+  /* height: auto; */
+  /* margin-bottom: 20px; */
+  margin-block: 20px;
 }
