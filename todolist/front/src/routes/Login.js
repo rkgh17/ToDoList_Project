@@ -97,7 +97,7 @@ function Login() {
         <form onSubmit={onSubmitLogin}>
           <div className="input_box_wrapper">
             <div className="input_box">
-              <AiOutlineMail />
+              <AiOutlineMail size={28} />
               <input
                 type="id"
                 className="form-control"
@@ -109,7 +109,7 @@ function Login() {
             </div>
 
             <div className="input_box">
-              <RiLockPasswordLine />
+              <RiLockPasswordLine size={28} />
               <input
                 type="password"
                 className="form-control"
@@ -120,17 +120,18 @@ function Login() {
               />
             </div>
           </div>
-        </form>
-        <div>
+
           <div>
-            <button type="submit" className="Main_Button">
-              로그인
-            </button>
+            <div>
+              <button type="submit" className="Main_Button">
+                로그인
+              </button>
+            </div>
+            <Link to="/signup">
+              <button className="Main_Button">회원가입</button>
+            </Link>
           </div>
-          <Link to="/signup">
-            <button className="Main_Button">회원가입</button>
-          </Link>
-        </div>
+        </form>
       </header>
     </div>
   );
