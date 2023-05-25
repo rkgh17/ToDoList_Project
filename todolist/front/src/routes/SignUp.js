@@ -80,7 +80,8 @@ function SignUp() {
     <div className="Main">
       <header className="Header">
         <form>
-          <div style={{ display: "flex", flexDirection: "column" }}>
+          <div>
+            {/* <div style={{ display: "flex", flexDirection: "column" }}> */}
             <div>회원가입</div>
 
             <div className="formbox">
