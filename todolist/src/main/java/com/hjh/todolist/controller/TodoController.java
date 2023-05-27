@@ -75,7 +75,7 @@ public class TodoController {
 //		System.out.println(map.get("state").getClass());
 //		System.out.println(map.get("listid").getClass());
 		
-		// 전달받은 state값에 따라 TODO 저장과 취소		
+		// 전달받은 state값에 따라 Todo 저장과 취소		
 		todoListService.updateList(!(boolean) map.get("state"), Long.valueOf(map.get("listid").toString()));
 		
 		
