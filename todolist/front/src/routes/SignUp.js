@@ -82,7 +82,7 @@ function SignUp() {
         <form>
           <div>
             {/* <div style={{ display: "flex", flexDirection: "column" }}> */}
-            <div>회원가입</div>
+            {/* <div>회원가입</div> */}
 
             <div className="formbox">
               <label>닉네임 </label>

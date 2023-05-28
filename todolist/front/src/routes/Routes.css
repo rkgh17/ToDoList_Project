@@ -87,3 +87,7 @@
   /* margin-bottom: 20px; */
   margin-block: 20px;
 }
+
+.form-control {
+  margin-inline: 10px;
+}

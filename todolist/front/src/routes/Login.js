@@ -93,7 +93,7 @@ function Login() {
   return (
     <div className="Main">
       <header className="Header">
-        <div>로그인</div>
+        {/* <div>로그인</div> */}
         <form onSubmit={onSubmitLogin}>
           <div className="input_box_wrapper">
             <div className="input_box">
