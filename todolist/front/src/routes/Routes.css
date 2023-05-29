@@ -63,7 +63,7 @@
   text-align: center;
   text-decoration: none;
   display: inline-block;
-  width: 100%;
+  width: 240px;
   transition-duration: 0.4s;
   cursor: pointer;
   font-weight: bold;
@@ -73,6 +73,8 @@
   background-color: #90caf9;
   color: white;
 }
+
+/* Login */
 
 .input_box_wrapper {
   display: flex;
@@ -91,3 +93,18 @@
 .form-control {
   margin-inline: 10px;
 }
+
+/* -Login- */
+
+/* SignUp */
+.formbox {
+  display: flex;
+  justify-content: space-between;
+  width: 350px;
+}
+
+.signupInput {
+  height: 30px;
+  margin-top: 18px;
+}
+/* -SignUp- */

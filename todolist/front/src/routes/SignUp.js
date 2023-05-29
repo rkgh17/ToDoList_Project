@@ -87,6 +87,7 @@ function SignUp() {
             <div className="formbox">
               <label>닉네임 </label>
               <input
+                className="signupInput"
                 type="name"
                 placeholder="닉네임을 입력하세요"
                 value={inputUserNickName}
@@ -97,6 +98,7 @@ function SignUp() {
             <div className="formbox">
               <label>이메일 (ID) </label>
               <input
+                className="signupInput"
                 type="email"
                 placeholder="이메일을 입력하세요"
                 value={inputUserId}
@@ -106,6 +108,7 @@ function SignUp() {
             <div className="formbox">
               <label>비밀번호 </label>
               <input
+                className="signupInput"
                 type="password"
                 placeholder="비밀번호를 입력하세요"
                 value={inputUserPw}
@@ -117,6 +120,7 @@ function SignUp() {
             <div className="formbox">
               <label>비밀번호 확인 </label>
               <input
+                className="signupInput"
                 type="password"
                 placeholder="비밀번호를 입력하세요"
                 value={inputUserPwCheck}
